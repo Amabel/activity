@@ -1,5 +1,10 @@
 GITHUB_API_ENDPOINT = 'https://api.github.com';
 
+$(function() {
+  // showVerifyingDiv();
+  showContents();
+});
+
 $('#token-submit').validator()
 
 $('#token-submit').submit(function() {
@@ -19,13 +24,36 @@ function validateAccessToken(accessToken) {
     dataType: 'json',
     success: function(data) {
       console.log(JSON.stringify(data));
-      showMainContainer();
+      storeAccessToken(accessToken);
+      showMainContainer(data);
     },
     error: function(error) {
       showTokenSubmit();
       console.log(JSON.stringify(error));
     }
   })
+}
+
+function showContents() {
+  let key = 'github_activities_access_token';
+  chrome.storage.sync.get([key], function(result) {
+    console.log(JSON.stringify(result));
+    accessToken = result[key];
+    console.log(accessToken);
+    if (!accessToken) {
+      showTokenSubmit();
+    } else {
+      showMainContainer();
+    }
+  });
+}
+
+function storeAccessToken(accessToken) {
+  let key = 'github_activities_access_token';
+  let value = accessToken;
+  chrome.storage.sync.set({key: value}, function() {
+    console.log('stored');
+  });
 }
 
 function showTokenSubmit() {
@@ -40,7 +68,7 @@ function showVerifyingDiv() {
   $('.verifying-token').show();
 }
 
-function showMainContainer() {
+function showMainContainer(data) {
   $('#token-submit').hide();
   $('.verifying-token').hide();
   $('.main-container').show();
