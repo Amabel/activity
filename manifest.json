@@ -1,6 +1,43 @@
 {
+  "manifest_version": 2,
   "name": "Activities",
   "version": "1.0.0",
   "description": "Activities for GitHub",
-  "manifest_version": 2
+
+  "permissions": [
+    "activeTab",
+    "declarativeContent",
+    "storage"
+  ],
+
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": false
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["http://github.com/*"],
+      "css": ["styles/activities.css"],
+      "js": ["js/contentScript.js"]
+    }
+  ],
+
+  "options_page": "options.html",
+  "options_ui":
+	{
+		"page": "options.html",
+		"chrome_style": true
+	},
+
+  "page_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      
+    }
+  },
+
+  "icons": {
+   
+  }
 }
