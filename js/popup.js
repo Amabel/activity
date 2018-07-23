@@ -1,8 +1,9 @@
 GITHUB_API_ENDPOINT = 'https://api.github.com';
 
 $(function() {
-  // showVerifyingDiv();
-  showContents();
+  showVerifyingDiv();
+  setTimeout(showContents, 300);
+  // showContents();
 });
 
 $('#token-submit').validator()
@@ -23,6 +24,7 @@ function validateAccessToken(accessToken) {
     url: GITHUB_API_ENDPOINT + '/user?access_token=' + accessToken,
     dataType: 'json',
     success: function(data) {
+      
       console.log(JSON.stringify(data));
       storeAccessToken(accessToken);
       showMainContainer(data);
@@ -43,7 +45,7 @@ function showContents() {
     if (!accessToken) {
       showTokenSubmit();
     } else {
-      showMainContainer();
+      validateAccessToken(accessToken);
     }
   });
 }
@@ -69,7 +71,21 @@ function showVerifyingDiv() {
 }
 
 function showMainContainer(data) {
+  addInfoToMainContainer(data);
   $('#token-submit').hide();
   $('.verifying-token').hide();
   $('.main-container').show();
+}
+
+function addInfoToMainContainer(data) {
+  myData = eval(data);
+  console.log(JSON.stringify(data));
+  console.log(myData);
+  avatarUrl = myData.avatar_url;
+  username = myData.login;
+  homePage = myData.html_url;
+  avatarDiv = '<img src="' + avatarUrl + '">';
+  console.log(avatarUrl);
+  $('.main-container .user-wrapper .avatar').append(avatarDiv);
+  $('#username').text('Hi, ' + username);
 }

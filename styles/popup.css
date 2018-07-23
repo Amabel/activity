@@ -36,18 +36,39 @@ a:hover {
   height: 270px;
 }
 
-.footer-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .verifying-token {
   display: flex;
   justify-content: center;
 }
 
+.main-container {
+
+}
+
+.main-container .user-wrapper {
+
+}
+
+.main-container .user-wrapper .avatar {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+}
+
+.main-container .user-wrapper .avatar img {
+  width: 100%;
+}
+
+.main-container .user-wrapper .username {
+  display: inline-block;
+  margin-left: 18px;
+  font-size: 20px;
+}
+
 .footer-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 24px;
   font-size: 70%
 }
