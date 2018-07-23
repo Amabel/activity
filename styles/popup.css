@@ -1,4 +1,28 @@
+
+/* html {
+  padding: 14px;
+} */
 body {
-  width: 300px;
+  padding: 15px;
+  width: 480px;
   height: 300px;
+}
+
+.container {
+  padding: 0;
+}
+
+.title-wrapper {
+  width: 100%;
+  text-align: center;
+}
+
+.divider {
+  margin-top: 14px;
+  height: 1px;
+  background-color: #eaecef;
+}
+
+.token-wrapper {
+  margin-top: 24px;
 }

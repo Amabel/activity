@@ -1,9 +1,28 @@
 <!DOCTYPE html>
   <html>
     <head>
+      <link rel="stylesheet" href="lib/styles/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
       <link rel="stylesheet" href="styles/popup.css">
     </head>
     <body>
+      <div class="popup-container">
+        <div class="title-wrapper">
+          <span class="title">GitHub Activities</span>
+        </div>
+        <div class="divider"></div>
+        <div class="token-wrapper">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="GitHub Access Token">
+            <div class="input-group-append">
+              <button class="btn btn-success" type="button">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="lib/js/jquery.min.js"></script>
+      <script src="lib/js/popper.min.js"></script>
+      <script src="lib/js/bootstrap.min.js"></script>
       <script src="js/popup.js"></script>
     </body>
   </html>
