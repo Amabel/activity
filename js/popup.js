@@ -1,4 +1,9 @@
 GITHUB_API_ENDPOINT = 'https://api.github.com';
+EVENT_TYPES = [
+                'CreateEvent', 'DeleteEvent', 'IssueCommentEvent', 
+                'IssuesEvent', 'PullRequestEvent', 'PushEvent',
+                'PullRequestReviewEvent', 'PullRequestReviewCommentEvent'
+              ];
 
 $(function() {
   showVerifyingDiv();
@@ -108,13 +113,63 @@ function getActivities(accessToken, callback) {
 function addContentsToActivityContentDiv(data) {
   myActivities = eval(data);
   console.log(myActivities);
-  $.each(function(index, myActivity) {
-    let activityType = myActivity.type;
-    switch(activityType) {
-      case '':
-
-      default:
-        console.log('unsupported type: ' + activityType);
+  $.each(myActivities, function(index, myActivity) {
+    if (myActivity.type == 'CreateEvent') {
+      $('.activity-contents-wrapper').prepend(resolveActivity(myActivity));
     }
   });
+}
+
+function resolveActivity(myActivity) {
+  let contentDiv = '';
+  let activityType = myActivity.type;
+  console.log(activityType);
+  switch(activityType) {
+    case 'CreateEvent':
+      contentDiv += getCreateEventTypeContents(myActivity);
+      break;
+    case 'DeleteEvent':
+      break;
+    case 'IssueCommentEvent':
+      break;
+    case 'IssuesEvent':
+      break;
+    case 'PullRequestEvent':
+      break;
+    case 'PushEvent':
+      break;
+    case 'PullRequestReviewEvent':
+      break;
+    case 'PullRequestReviewCommentEvent':
+      break;
+    default:
+      console.log('unsupported type: ' + activityType);
+  }
+  return contentDiv;
+}
+
+// event types
+function getCreateEventTypeContents(myActivity) {
+  let contents = '';
+  let username = myActivity.actor.login;
+  let repoName = myActivity.repo.name;
+  let repoUrl = 'https://github.com/' + repoName;
+  let refType = myActivity.payload.ref_type;
+  let ref = myActivity.payload.ref || '';
+  let actionUrl = repoUrl + '/tree/' + ref;
+  let createdAt = myActivity.created_at;
+  let timeFromNow = moment(createdAt).fromNow();
+  contents += '<div class="activity-content-wrapper">' + 
+                '<div class="activity-row>' + 
+                  '<span class="action">' + 
+                    'created a ' + refType + ' <a href="' + actionUrl + '">' + ref + '</a>' +
+                  '</span>' +
+                  '<div class="time-stamp">' +
+                    timeFromNow
+                  '</div>' +
+                '</div>' +           
+              '</div>';
+  console.log(contents);
+  console.log(moment(createdAt).fromNow());
+  return contents;
 }

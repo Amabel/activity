@@ -78,6 +78,15 @@ a:hover {
   border: 1px solid #333333;
 }
 
+.activity-container .activity-wrapper .activity-contents-wrapper .activity-content-wrapper {
+  font-size: 13px;
+}
+
+.time-stamp {
+  font-size: 10px;
+  color: #a0a0a0;
+}
+
 .footer-wrapper {
   display: flex;
   flex-direction: column;
