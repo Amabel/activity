@@ -82,17 +82,18 @@ a:hover {
   font-size: 13px;
 }
 
-.activity-icon {
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  background-repeat: no-repeat;
-  background-size: contain;
+.activity-row {
+  display: flex;
+  align-items: center;
 }
 
-.grey {
-  background-image: linear-gradient(#f00, #f00);
-  background-blend-mode: screen;
+.activity-icon-wrapper {
+  display: inline-block;
+}
+
+.activity-description {
+  display: inline-block;
+  margin-left: 8px;
 }
 
 .time-stamp {

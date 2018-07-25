@@ -168,7 +168,7 @@ function getCreateEventTypeContents(myActivity) {
     case 'tags':
       iconUrl = 'images/icons/tag.svg';
       break;
-    case null:
+    case 'repository':
       iconUrl = 'images/icons/repo.svg';
       break;
     default:
@@ -177,10 +177,10 @@ function getCreateEventTypeContents(myActivity) {
 
   contents += '<div class="activity-content-wrapper">' + 
                 '<div class="activity-row">' + 
-                  '<div class="activity-icon grey" style="background-image: url(' + iconUrl + ')">' +
-
+                  '<div class="activity-icon-wrapper">' +
+                    '<img src="' + iconUrl + '">' +
                   '</div>' + 
-                  '<div class="activity-desctiption>' + 
+                  '<div class="activity-description">' + 
                     '<span class="action">' + 
                       'created a ' + refType + ' <a href="' + actionUrl + '">' + ref + '</a>' +
                     '</span>' +
