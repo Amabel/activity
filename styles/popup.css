@@ -78,8 +78,21 @@ a:hover {
   border: 1px solid #333333;
 }
 
-.activity-container .activity-wrapper .activity-contents-wrapper .activity-content-wrapper {
+.activity-content-wrapper {
   font-size: 13px;
+}
+
+.activity-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.grey {
+  background-image: linear-gradient(#f00, #f00);
+  background-blend-mode: screen;
 }
 
 .time-stamp {

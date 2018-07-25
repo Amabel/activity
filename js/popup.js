@@ -159,14 +159,35 @@ function getCreateEventTypeContents(myActivity) {
   let actionUrl = repoUrl + '/tree/' + ref;
   let createdAt = myActivity.created_at;
   let timeFromNow = moment(createdAt).fromNow();
+  let iconUrl = '';
+  switch(refType) {
+    case 'branch':
+      iconUrl = 'images/icons/git-branch.svg';
+      break;
+    case 'tag':
+    case 'tags':
+      iconUrl = 'images/icons/tag.svg';
+      break;
+    case null:
+      iconUrl = 'images/icons/repo.svg';
+      break;
+    default:
+  }
+  console.log(iconUrl);
+
   contents += '<div class="activity-content-wrapper">' + 
-                '<div class="activity-row>' + 
-                  '<span class="action">' + 
-                    'created a ' + refType + ' <a href="' + actionUrl + '">' + ref + '</a>' +
-                  '</span>' +
-                  '<div class="time-stamp">' +
-                    timeFromNow
-                  '</div>' +
+                '<div class="activity-row">' + 
+                  '<div class="activity-icon grey" style="background-image: url(' + iconUrl + ')">' +
+
+                  '</div>' + 
+                  '<div class="activity-desctiption>' + 
+                    '<span class="action">' + 
+                      'created a ' + refType + ' <a href="' + actionUrl + '">' + ref + '</a>' +
+                    '</span>' +
+                    '<div class="time-stamp">' +
+                      timeFromNow
+                    '</div>' +
+                  '</div>'
                 '</div>' +           
               '</div>';
   console.log(contents);
