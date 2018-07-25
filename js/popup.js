@@ -2,7 +2,7 @@ GITHUB_API_ENDPOINT = 'https://api.github.com';
 
 $(function() {
   showVerifyingDiv();
-  setTimeout(showContents, 300);
+  setTimeout(showContents, 0);
   // showContents();
 });
 
@@ -24,10 +24,10 @@ function validateAccessToken(accessToken) {
     url: GITHUB_API_ENDPOINT + '/user?access_token=' + accessToken,
     dataType: 'json',
     success: function(data) {
-      
       console.log(JSON.stringify(data));
       storeAccessToken(accessToken);
       showMainContainer(data);
+      getActivities(accessToken, addContentsToActivityContentDiv);
     },
     error: function(error) {
       showTokenSubmit();
@@ -78,14 +78,43 @@ function showMainContainer(data) {
 }
 
 function addInfoToMainContainer(data) {
+  // global variables
   myData = eval(data);
   console.log(JSON.stringify(data));
   console.log(myData);
   avatarUrl = myData.avatar_url;
   username = myData.login;
   homePage = myData.html_url;
-  avatarDiv = '<img src="' + avatarUrl + '">';
+  let avatarDiv = '<img src="' + avatarUrl + '">';
   console.log(avatarUrl);
   $('.main-container .user-wrapper .avatar').append(avatarDiv);
   $('#username').text('Hi, ' + username);
+}
+
+function getActivities(accessToken, callback) {
+  console.log(myData);
+  $.ajax({
+    url: GITHUB_API_ENDPOINT + '/users/' + username + '/events?access_token=' + accessToken,
+    dataType: 'json',
+    success: function(data) {
+      callback(data);
+    },
+    error: function(error) {
+      console.log(JSON.stringify(error));
+    }
+  })
+}
+
+function addContentsToActivityContentDiv(data) {
+  myActivities = eval(data);
+  console.log(myActivities);
+  $.each(function(index, myActivity) {
+    let activityType = myActivity.type;
+    switch(activityType) {
+      case '':
+
+      default:
+        console.log('unsupported type: ' + activityType);
+    }
+  });
 }

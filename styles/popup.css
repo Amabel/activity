@@ -65,6 +65,19 @@ a:hover {
   font-size: 20px;
 }
 
+.activity-container {
+  margin-top: 24px;
+}
+
+.activity-container .activity-wrapper .activity-title {
+  color: #a0a0a0;
+  font-size: 13px;
+}
+
+.activity-container .activity-wrapper .activity-contents-wrapper {
+  border: 1px solid #333333;
+}
+
 .footer-wrapper {
   display: flex;
   flex-direction: column;
