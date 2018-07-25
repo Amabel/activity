@@ -1,11 +1,8 @@
 @import url(../lib/styles/loader_ring.css);
-/* html {
-  padding: 14px;
-} */
+
 body {
   padding: 15px;
-  width: 380px;
-  /* height: 300px; */
+  min-width: 360px;
 }
 
 a {
@@ -33,7 +30,7 @@ a:hover {
 
 .content-wrapper {
   margin-top: 24px;
-  height: 270px;
+  /* height: 300px; */
 }
 
 .verifying-token {
@@ -75,16 +72,28 @@ a:hover {
 }
 
 .activity-container .activity-wrapper .activity-contents-wrapper {
-  border: 1px solid #333333;
+  max-width: 360px;
+  max-height: 270px;
+  overflow: scroll;
+  border: 1px solid #e2e4e9;
 }
 
 .activity-content-wrapper {
   font-size: 13px;
+  /* border-top: 1px solid #e2e4e9; */
+}
+
+.activity-content-wrapper:first-child {
+  /* border-top: 0; */
 }
 
 .activity-row {
   display: flex;
-  align-items: center;
+  padding: 8px;
+}
+
+.activity-row-child:first {
+  border-top: 0;
 }
 
 .activity-icon-wrapper {
@@ -94,6 +103,12 @@ a:hover {
 .activity-description {
   display: inline-block;
   margin-left: 8px;
+}
+
+.action {
+  /* max-width: 230px; */
+  white-space: nowrap;
+  /* overflow: scroll; */
 }
 
 .time-stamp {

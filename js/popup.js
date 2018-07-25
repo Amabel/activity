@@ -181,9 +181,9 @@ function getCreateEventTypeContents(myActivity) {
                     '<img src="' + iconUrl + '">' +
                   '</div>' + 
                   '<div class="activity-description">' + 
-                    '<span class="action">' + 
+                    '<div class="action">' + 
                       'created a ' + refType + ' <a href="' + actionUrl + '">' + ref + '</a>' +
-                    '</span>' +
+                    '</div>' +
                     '<div class="time-stamp">' +
                       timeFromNow
                     '</div>' +
