@@ -207,7 +207,7 @@ function getIssuesEventTypeContent(myActivity) {
 
 }
 
-function getPullRequestEventEventTypeContent(myActivity) {
+function getPullRequestEventTypeContent(myActivity) {
 
 }
 
@@ -239,7 +239,6 @@ function getPushEventTypeContent(myActivity) {
                   '</div>'
                 '</div>' +           
               '</div>';
-  console.log(contents);
   return contents;
 }
 
