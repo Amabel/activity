@@ -114,9 +114,7 @@ function addContentsToActivityContentDiv(data) {
   myActivities = eval(data);
   console.log(myActivities);
   $.each(myActivities, function(index, myActivity) {
-    if (myActivity.type == 'CreateEvent') {
-      $('.activity-contents-wrapper').prepend(resolveActivity(myActivity));
-    }
+    $('.activity-contents-wrapper').append(resolveActivity(myActivity));
   });
 }
 
@@ -137,6 +135,8 @@ function resolveActivity(myActivity) {
     case 'PullRequestEvent':
       break;
     case 'PushEvent':
+      console.log('pushEvent');
+      contentDiv += getPushEventTypeContent(myActivity);
       break;
     case 'PullRequestReviewEvent':
       break;
@@ -193,4 +193,60 @@ function getCreateEventTypeContents(myActivity) {
   console.log(contents);
   console.log(moment(createdAt).fromNow());
   return contents;
+}
+
+function getDeleteEventTypeContent(myActivity) {
+
+}
+
+function getIssueCommentEventTypeContent(myActivity) {
+
+}
+
+function getIssuesEventTypeContent(myActivity) {
+
+}
+
+function getPullRequestEventEventTypeContent(myActivity) {
+
+}
+
+function getPushEventTypeContent(myActivity) {
+  let contents = '';
+  let username = myActivity.actor.login;
+  let repoName = myActivity.repo.name;
+  let repoUrl = 'https://github.com/' + repoName;
+  let ref = myActivity.payload.ref.substring(11);
+  console.log('ref = ' + ref)
+  let actionUrl = repoUrl + '/commits/' + myActivity.payload.commits[0].sha;
+  let numberOfCommit = myActivity.payload.commits.length;
+  let commitWord = numberOfCommit === 1 ? 'commit' : 'commits';
+  let createdAt = myActivity.created_at;
+  let timeFromNow = moment(createdAt).fromNow();
+  let iconUrl = 'images/icons/repo-push.svg';
+  contents += '<div class="activity-content-wrapper">' + 
+                '<div class="activity-row">' + 
+                  '<div class="activity-icon-wrapper">' +
+                    '<img src="' + iconUrl + '">' +
+                  '</div>' + 
+                  '<div class="activity-description">' + 
+                    '<div class="action">' + 
+                      'pushed ' + numberOfCommit + ' ' + commitWord + ' into ' + ' <a href="' + actionUrl + '">' + ref + '</a>' +
+                    '</div>' +
+                    '<div class="time-stamp">' +
+                      timeFromNow
+                    '</div>' +
+                  '</div>'
+                '</div>' +           
+              '</div>';
+  console.log(contents);
+  return contents;
+}
+
+function getPullRequestReviewEventEventTypeContent(myActivity) {
+
+}
+
+function getPullRequestReviewCommentEventTypeContent(myActivity) {
+
 }
