@@ -14,7 +14,7 @@ a:hover {
 }
 
 .container {
-  padding: 0;
+  /* padding: 0; */
 }
 
 .title-wrapper {
@@ -72,28 +72,29 @@ a:hover {
 }
 
 .activity-container .activity-wrapper .activity-contents-wrapper {
-  max-width: 360px;
-  max-height: 270px;
-  overflow: scroll;
+  height: 270px;
+  overflow-y: scroll;
   border: 1px solid #e2e4e9;
 }
 
 .activity-content-wrapper {
   font-size: 13px;
-  /* border-top: 1px solid #e2e4e9; */
+  padding: 8px;
+  border-top: 1px solid #e2e4e9;
+
+}
+
+.activity-content-wrapper:hover {
+  background-color: #f6fbff;
 }
 
 .activity-content-wrapper:first-child {
-  /* border-top: 0; */
+  border-top: 0;
+  
 }
 
 .activity-row {
   display: flex;
-  padding: 8px;
-}
-
-.activity-row-child:first {
-  border-top: 0;
 }
 
 .activity-icon-wrapper {
