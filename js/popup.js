@@ -133,9 +133,9 @@ function resolveActivity(myActivity) {
     case 'IssuesEvent':
       break;
     case 'PullRequestEvent':
+      contentDiv += getPullRequestEventTypeContent(myActivity);
       break;
     case 'PushEvent':
-      console.log('pushEvent');
       contentDiv += getPushEventTypeContent(myActivity);
       break;
     case 'PullRequestReviewEvent':
@@ -173,8 +173,6 @@ function getCreateEventTypeContents(myActivity) {
       break;
     default:
   }
-  console.log(iconUrl);
-
   contents += '<div class="activity-content-wrapper">' + 
                 '<div class="activity-row">' + 
                   '<div class="activity-icon-wrapper">' +
@@ -190,8 +188,6 @@ function getCreateEventTypeContents(myActivity) {
                   '</div>'
                 '</div>' +           
               '</div>';
-  console.log(contents);
-  console.log(moment(createdAt).fromNow());
   return contents;
 }
 
@@ -208,7 +204,33 @@ function getIssuesEventTypeContent(myActivity) {
 }
 
 function getPullRequestEventTypeContent(myActivity) {
-
+  let contents = '';
+  let username = myActivity.actor.login;
+  let repoName = myActivity.repo.name;
+  let repoUrl = 'https://github.com/' + repoName;
+  let pullRequestNumber = myActivity.payload.pull_request.number;
+  let pullRequestTitle = myActivity.payload.pull_request.title;
+  let action = myActivity.payload.action;
+  let actionUrl = myActivity.payload.pull_request.html_url;
+  let createdAt = myActivity.created_at;
+  let timeFromNow = moment(createdAt).fromNow();
+  let iconUrl = 'images/icons/git-pull-request-open.svg';
+  contents += '<div class="activity-content-wrapper">' + 
+                '<div class="activity-row">' + 
+                  '<div class="activity-icon-wrapper">' +
+                    '<img src="' + iconUrl + '">' +
+                  '</div>' + 
+                  '<div class="activity-description">' + 
+                    '<div class="action">' + 
+                      action + ' a pull request ' + '<a href="' + actionUrl + '">' + '#' + pullRequestNumber + '</a>' +
+                    '</div>' +
+                    '<div class="time-stamp">' +
+                      timeFromNow
+                    '</div>' +
+                  '</div>'
+                '</div>' +           
+              '</div>';
+  return contents;
 }
 
 function getPushEventTypeContent(myActivity) {
@@ -217,7 +239,6 @@ function getPushEventTypeContent(myActivity) {
   let repoName = myActivity.repo.name;
   let repoUrl = 'https://github.com/' + repoName;
   let ref = myActivity.payload.ref.substring(11);
-  console.log('ref = ' + ref)
   let actionUrl = repoUrl + '/commits/' + myActivity.payload.commits[0].sha;
   let numberOfCommit = myActivity.payload.commits.length;
   let commitWord = numberOfCommit === 1 ? 'commit' : 'commits';
