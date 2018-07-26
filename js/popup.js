@@ -210,11 +210,31 @@ function getPullRequestEventTypeContent(myActivity) {
   let repoUrl = 'https://github.com/' + repoName;
   let pullRequestNumber = myActivity.payload.pull_request.number;
   let pullRequestTitle = myActivity.payload.pull_request.title;
+  // action
   let action = myActivity.payload.action;
+  if (action === 'closed') {
+    if (myActivity.payload.pull_request.merged) {
+      action = 'merged';
+    }
+  }
   let actionUrl = myActivity.payload.pull_request.html_url;
   let createdAt = myActivity.created_at;
   let timeFromNow = moment(createdAt).fromNow();
-  let iconUrl = 'images/icons/git-pull-request-open.svg';
+  // icon url
+  let iconUrl = null;
+  switch (action) {
+    case 'opened':
+      iconUrl = 'images/icons/git-pull-request-open.svg';
+      break;
+    case 'closed':
+      iconUrl = 'images/icons/git-pull-request-closed.svg';
+      break;
+    case 'merged':
+      iconUrl = 'images/icons/git-merge.svg';
+      break;
+    default:
+      iconUrl = null;
+  }
   contents += '<div class="activity-content-wrapper">' + 
                 '<div class="activity-row">' + 
                   '<div class="activity-icon-wrapper">' +
