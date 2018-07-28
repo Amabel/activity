@@ -181,7 +181,7 @@ function getCreateEventTypeContents(myActivity) {
                   '</div>' + 
                   '<div class="activity-description">' + 
                     '<div class="action">' + 
-                      'created a ' + refType + ' <a href="' + actionUrl + '">' + ref + '</a>' + ' in <a href="' + repoUrl + '">' + repoName + '</a>' + 
+                      'created a ' + refType + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                     '</div>' +
                     '<div class="time-stamp">' +
                       timeFromNow
@@ -218,7 +218,7 @@ function getIssueCommentEventTypeContent(myActivity) {
                   '</div>' + 
                   '<div class="activity-description">' + 
                     '<div class="action">' + 
-                      action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper">comment</a> on ' + ' <a href="' + issueUrl + '"> #' + issueNum + '</a>' + ' in <a href="' + repoUrl + '">' + repoName + '</a>' + 
+                      action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a href="' + issueUrl + '" target="_blank"> #' + issueNum + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                     '</div>' +
                     '<div class="time-stamp">' +
                       timeFromNow
@@ -256,7 +256,7 @@ function getIssuesEventTypeContent(myActivity) {
                   '</div>' + 
                   '<div class="activity-description">' + 
                     '<div class="action">' + 
-                      action + ' an issue ' + ' <a href="' + actionUrl + '">#' + issueNum + '</a>' + ' in <a href="' + repoUrl + '">' + repoName + '</a>' + 
+                      action + ' an issue ' + ' <a href="' + actionUrl + '" target="_blank">#' + issueNum + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                     '</div>' +
                     '<div class="time-stamp">' +
                       timeFromNow
@@ -306,7 +306,7 @@ function getPullRequestEventTypeContent(myActivity) {
                   '</div>' + 
                   '<div class="activity-description">' + 
                     '<div class="action">' + 
-                      action + ' a pull request ' + '<a href="' + actionUrl + '">' + '#' + pullRequestNumber + '</a>' + ' in <a href="' + repoUrl + '">' + repoName + '</a>' + 
+                      action + ' a pull request ' + '<a href="' + actionUrl + '" target="_blank">' + '#' + pullRequestNumber + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                     '</div>' +
                     '<div class="time-stamp">' +
                       timeFromNow
@@ -336,7 +336,7 @@ function getPushEventTypeContent(myActivity) {
                   '</div>' + 
                   '<div class="activity-description">' + 
                     '<div class="action">' + 
-                      'pushed ' + numberOfCommit + ' ' + commitWord + ' into ' + ' <a href="' + actionUrl + '">' + ref + '</a>' + ' in <a href="' + repoUrl + '">' + repoName + '</a>' + 
+                      'pushed ' + numberOfCommit + ' ' + commitWord + ' into ' + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                     '</div>' +
                     '<div class="time-stamp">' +
                       timeFromNow
