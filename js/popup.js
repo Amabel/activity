@@ -128,8 +128,10 @@ function resolveActivity(myActivity) {
     case 'DeleteEvent':
       break;
     case 'IssueCommentEvent':
+    contentDiv += getIssueCommentEventTypeContent(myActivity);
       break;
     case 'IssuesEvent':
+    contentDiv += getIssuesEventTypeContent(myActivity);
       break;
     case 'PullRequestEvent':
       contentDiv += getPullRequestEventTypeContent(myActivity);
@@ -179,7 +181,7 @@ function getCreateEventTypeContents(myActivity) {
                   '</div>' + 
                   '<div class="activity-description">' + 
                     '<div class="action">' + 
-                      'created a ' + refType + ' <a href="' + actionUrl + '">' + ref + '</a>' +
+                      'created a ' + refType + ' <a href="' + actionUrl + '">' + ref + '</a>' + ' in <a href="' + repoUrl + '">' + repoName + '</a>' + 
                     '</div>' +
                     '<div class="time-stamp">' +
                       timeFromNow
@@ -195,11 +197,74 @@ function getDeleteEventTypeContent(myActivity) {
 }
 
 function getIssueCommentEventTypeContent(myActivity) {
-
+  let contents = '';
+  let username = myActivity.actor.login;
+  let repoName = myActivity.repo.name;
+  let repoUrl = 'https://github.com/' + repoName;
+  let comment = myActivity.payload.comment;
+  let issue = myActivity.payload.issue;
+  let commentUrl = comment.html_url;
+  let issueNum = issue.number;
+  let issueUrl = issue.html_url;
+  let title = issue.title;
+  let action = myActivity.payload.action;
+  let createdAt = myActivity.created_at;
+  let timeFromNow = moment(createdAt).fromNow();
+  let iconUrl = 'images/icons/comment.svg';
+  contents += '<div class="activity-content-wrapper">' + 
+                '<div class="activity-row">' + 
+                  '<div class="activity-icon-wrapper">' +
+                    '<img src="' + iconUrl + '">' +
+                  '</div>' + 
+                  '<div class="activity-description">' + 
+                    '<div class="action">' + 
+                      action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper">comment</a> on ' + ' <a href="' + issueUrl + '"> #' + issueNum + '</a>' + ' in <a href="' + repoUrl + '">' + repoName + '</a>' + 
+                    '</div>' +
+                    '<div class="time-stamp">' +
+                      timeFromNow
+                    '</div>' +
+                  '</div>'
+                '</div>' +           
+              '</div>';
+  return contents;
 }
 
 function getIssuesEventTypeContent(myActivity) {
-
+  let contents = '';
+  let username = myActivity.actor.login;
+  let repoName = myActivity.repo.name;
+  let repoUrl = 'https://github.com/' + repoName;
+  let issue = myActivity.payload.issue;
+  let issueNum = issue.number;
+  let title = issue.title;
+  let actionUrl = issue.html_url;
+  let action = myActivity.payload.action;
+  let createdAt = myActivity.created_at;
+  let timeFromNow = moment(createdAt).fromNow();
+  let iconUrl = '';
+  if (action === 'closed') {
+    iconUrl = 'images/icons/issue-closed.svg';
+  } else if (action === 'reopened') {
+    iconUrl = 'images/icons/issue-reopened.svg';
+  } else {
+    iconUrl = 'images/icons/issue-opened.svg';
+  }
+  contents += '<div class="activity-content-wrapper">' + 
+                '<div class="activity-row">' + 
+                  '<div class="activity-icon-wrapper">' +
+                    '<img src="' + iconUrl + '">' +
+                  '</div>' + 
+                  '<div class="activity-description">' + 
+                    '<div class="action">' + 
+                      action + ' an issue ' + ' <a href="' + actionUrl + '">#' + issueNum + '</a>' + ' in <a href="' + repoUrl + '">' + repoName + '</a>' + 
+                    '</div>' +
+                    '<div class="time-stamp">' +
+                      timeFromNow
+                    '</div>' +
+                  '</div>'
+                '</div>' +           
+              '</div>';
+  return contents;
 }
 
 function getPullRequestEventTypeContent(myActivity) {
@@ -241,7 +306,7 @@ function getPullRequestEventTypeContent(myActivity) {
                   '</div>' + 
                   '<div class="activity-description">' + 
                     '<div class="action">' + 
-                      action + ' a pull request ' + '<a href="' + actionUrl + '">' + '#' + pullRequestNumber + '</a>' +
+                      action + ' a pull request ' + '<a href="' + actionUrl + '">' + '#' + pullRequestNumber + '</a>' + ' in <a href="' + repoUrl + '">' + repoName + '</a>' + 
                     '</div>' +
                     '<div class="time-stamp">' +
                       timeFromNow
@@ -271,7 +336,7 @@ function getPushEventTypeContent(myActivity) {
                   '</div>' + 
                   '<div class="activity-description">' + 
                     '<div class="action">' + 
-                      'pushed ' + numberOfCommit + ' ' + commitWord + ' into ' + ' <a href="' + actionUrl + '">' + ref + '</a>' +
+                      'pushed ' + numberOfCommit + ' ' + commitWord + ' into ' + ' <a href="' + actionUrl + '">' + ref + '</a>' + ' in <a href="' + repoUrl + '">' + repoName + '</a>' + 
                     '</div>' +
                     '<div class="time-stamp">' +
                       timeFromNow

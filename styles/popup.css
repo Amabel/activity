@@ -99,6 +99,7 @@ a:hover {
 
 .activity-icon-wrapper {
   display: inline-block;
+  width: 16px;
 }
 
 .activity-description {
@@ -110,6 +111,10 @@ a:hover {
   /* max-width: 230px; */
   white-space: nowrap;
   /* overflow: scroll; */
+}
+
+.action .comment-text-wrapper {
+  color: #777777;
 }
 
 .time-stamp {
