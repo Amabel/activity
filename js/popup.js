@@ -126,6 +126,7 @@ function resolveActivity(myActivity) {
       contentDiv += getCreateEventTypeContents(myActivity);
       break;
     case 'DeleteEvent':
+      contentDiv += getDeleteEventTypeContent(myActivity);
       break;
     case 'IssueCommentEvent':
     contentDiv += getIssueCommentEventTypeContent(myActivity);
@@ -142,6 +143,7 @@ function resolveActivity(myActivity) {
     case 'PullRequestReviewEvent':
       break;
     case 'PullRequestReviewCommentEvent':
+      contentDiv += getPullRequestReviewCommentEventTypeContent(myActivity);
       break;
     default:
       console.log('unsupported type: ' + activityType);
@@ -193,7 +195,32 @@ function getCreateEventTypeContents(myActivity) {
 }
 
 function getDeleteEventTypeContent(myActivity) {
-
+  let contents = '';
+  let username = myActivity.actor.login;
+  let repoName = myActivity.repo.name;
+  let repoUrl = 'https://github.com/' + repoName;
+  let refType = myActivity.payload.ref_type;
+  let ref = myActivity.payload.ref;
+  let actionUrl = repoUrl + '/branches';
+  let createdAt = myActivity.created_at;
+  let timeFromNow = moment(createdAt).fromNow();
+  let iconUrl = 'images/icons/trashcan.svg';
+  contents += '<div class="activity-content-wrapper">' + 
+                '<div class="activity-row">' + 
+                  '<div class="activity-icon-wrapper">' +
+                    '<img src="' + iconUrl + '">' +
+                  '</div>' + 
+                  '<div class="activity-description">' + 
+                    '<div class="action">' + 
+                      'deleted a ' + refType + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                    '</div>' +
+                    '<div class="time-stamp">' +
+                      timeFromNow
+                    '</div>' +
+                  '</div>'
+                '</div>' +           
+              '</div>';
+  return contents;
 }
 
 function getIssueCommentEventTypeContent(myActivity) {
@@ -347,10 +374,39 @@ function getPushEventTypeContent(myActivity) {
   return contents;
 }
 
-function getPullRequestReviewEventEventTypeContent(myActivity) {
+function getPullRequestReviewEventTypeContent(myActivity) {
 
 }
 
 function getPullRequestReviewCommentEventTypeContent(myActivity) {
-
+  let contents = '';
+  let username = myActivity.actor.login;
+  let repoName = myActivity.repo.name;
+  let repoUrl = 'https://github.com/' + repoName;
+  let comment = myActivity.payload.comment;
+  let pullRequest = myActivity.payload.pull_request;
+  let commentUrl = comment.html_url;
+  let pullRequestNum = pullRequest.number;
+  let pullResuestUrl = pullRequest.html_url;
+  let title = pullRequest.title;
+  let action = myActivity.payload.action;
+  let createdAt = myActivity.created_at;
+  let timeFromNow = moment(createdAt).fromNow();
+  let iconUrl = 'images/icons/comment.svg';
+  contents += '<div class="activity-content-wrapper">' + 
+                '<div class="activity-row">' + 
+                  '<div class="activity-icon-wrapper">' +
+                    '<img src="' + iconUrl + '">' +
+                  '</div>' + 
+                  '<div class="activity-description">' + 
+                    '<div class="action">' + 
+                      action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a href="' + pullResuestUrl + '" target="_blank"> #' + pullRequestNum + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                    '</div>' +
+                    '<div class="time-stamp">' +
+                      timeFromNow
+                    '</div>' +
+                  '</div>'
+                '</div>' +           
+              '</div>';
+  return contents;
 }

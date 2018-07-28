@@ -98,7 +98,8 @@ a:hover {
 }
 
 .activity-icon-wrapper {
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
   width: 16px;
 }
 
