@@ -56,9 +56,8 @@ function showContents() {
 }
 
 function storeAccessToken(accessToken) {
-  let key = 'github_activities_access_token';
   let value = accessToken;
-  chrome.storage.sync.set({key: value}, function() {
+  chrome.storage.sync.set({github_activities_access_token: value}, function() {
     console.log('stored');
   });
 }
