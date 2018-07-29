@@ -8,10 +8,6 @@
 // GITHUB_API_ENDPOINT = newFunction();
 
 chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.sync.set({color: '#3aa757'}, function() {
-    console.log("The color is green.");
-  });
-
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([{
       conditions: [new chrome.declarativeContent.PageStateMatcher({
@@ -22,6 +18,17 @@ chrome.runtime.onInstalled.addListener(function() {
     }]);
   });
 });
+
+function sendMessageToContentScript(message, callback)
+{
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs)
+    {
+        chrome.tabs.sendMessage(tabs[0].id, message, function(response)
+        {
+            if(callback) callback(response);
+        });
+    });
+}
 
 function GITHUB_API_ENDPOINT() {
   return 'https://api.github.com';

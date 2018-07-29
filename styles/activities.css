@@ -1,0 +1,71 @@
+.ga-tabs-item:hover {
+  cursor: pointer;
+}
+
+.ga-icon-wrapper {
+  margin-right: 3px;
+  width: 16px;
+  height: 16px;
+  opacity: 0.4;
+}
+
+.ga-selected {
+  opacity: 1;
+}
+
+.activity-container .activity-wrapper .activity-title {
+  color: #a0a0a0;
+  font-size: 13px;
+}
+
+.activity-container .activity-wrapper .activity-contents-wrapper {
+  height: 270px;
+  overflow-y: scroll;
+  border: 1px solid #e2e4e9;
+}
+
+.activity-content-wrapper {
+  font-size: 13px;
+  padding: 8px;
+  border-top: 1px solid #e2e4e9;
+
+}
+
+.activity-content-wrapper:hover {
+  background-color: #f6fbff;
+}
+
+.activity-content-wrapper:first-child {
+  border-top: 0;
+  
+}
+
+.activity-row {
+  display: flex;
+}
+
+.activity-icon-wrapper {
+  display: inline-flex;
+  justify-content: center;
+  width: 16px;
+}
+
+.activity-description {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+.action {
+  /* max-width: 230px; */
+  white-space: nowrap;
+  /* overflow: scroll; */
+}
+
+.action .comment-text-wrapper {
+  color: #777777;
+}
+
+.time-stamp {
+  font-size: 10px;
+  color: #a0a0a0;
+}

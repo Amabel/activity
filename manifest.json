@@ -7,7 +7,8 @@
   "permissions": [
     "activeTab",
     "declarativeContent",
-    "storage"
+    "storage",
+    "webNavigation"
   ],
 
   "background": {
@@ -17,9 +18,15 @@
 
   "content_scripts": [
     {
-      "matches": ["http://github.com/*"],
+      "matches": ["*://github.com/*"],
       "css": ["styles/activities.css"],
-      "js": ["js/contentScript.js"]
+      "js": [
+        "lib/js/jquery.min.js", 
+        "js/contentScript.js",
+        "lib/js/popper.min.js",
+        "lib/js/bootstrap.min.js",
+        "lib/js/moment.min.js"
+      ]
     }
   ],
 
@@ -39,5 +46,9 @@
 
   "icons": {
    
-  }
+  },
+
+  "web_accessible_resources": [
+    "images/icons/*.svg"
+  ]
 }
