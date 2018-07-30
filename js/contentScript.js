@@ -1,6 +1,5 @@
 GITHUB_API_ENDPOINT = 'https://api.github.com';
 
-console.log('这是contendsft script!');
 let orgName = window.location.toString().split('/')[3];
 if (orgName === 'orgs') {
   orgName = window.location.toString().split('/')[4];
@@ -24,7 +23,6 @@ $('.ga-tabs-item').click(function() {
   })
   $(this).addClass('selected');
   $(this).children('.ga-icon-wrapper').addClass('ga-selected');
-  
   showContents();
 });
 
@@ -51,7 +49,6 @@ function showContents() {
   chrome.storage.sync.get([key], function(result) {
     accessToken = result[key];
     if (!accessToken) {
-      // showTokenSubmit();
       console.log('please submit access token');
     } else {
       validateAccessToken(accessToken);
@@ -220,6 +217,7 @@ function getIssueCommentEventTypeContent(activity) {
   let repoUrl = 'https://github.com/' + repoName;
   let comment = activity.payload.comment;
   let issue = activity.payload.issue;
+  let issueTitle = issue.title;
   let commentUrl = comment.html_url;
   let issueNum = issue.number;
   let issueUrl = issue.html_url;
@@ -239,7 +237,7 @@ function getIssueCommentEventTypeContent(activity) {
                         '<img src="' + avatarUrl + '">' +
                       '</div>' +
                       '<div class="action-description">' +
-                        username + ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a href="' + issueUrl + '" target="_blank"> #' + issueNum + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        username + ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a href="' + issueUrl + '" target="_blank"> #' + issueNum + ' ' + issueTitle + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -259,7 +257,7 @@ function getIssuesEventTypeContent(activity) {
   let repoUrl = 'https://github.com/' + repoName;
   let issue = activity.payload.issue;
   let issueNum = issue.number;
-  let title = issue.title;
+  let issueTitle = issue.title;
   let actionUrl = issue.html_url;
   let action = activity.payload.action;
   let createdAt = activity.created_at;
@@ -283,7 +281,7 @@ function getIssuesEventTypeContent(activity) {
                         '<img src="' + avatarUrl + '">' +
                       '</div>' +
                       '<div class="action-description">' +
-                        username + ' ' + action + ' an issue ' + ' <a href="' + actionUrl + '" target="_blank">#' + issueNum + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        username + ' ' + action + ' an issue ' + ' <a href="' + actionUrl + '" target="_blank">#' + issueNum + ' ' + issueTitle + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -339,7 +337,7 @@ function getPullRequestEventTypeContent(activity) {
                         '<img src="' + avatarUrl + '">' +
                       '</div>' +
                       '<div class="action-description">' +
-                        username + ' ' + action + ' a pull request ' + '<a href="' + actionUrl + '" target="_blank">' + '#' + pullRequestNumber + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        username + ' ' + action + ' a pull request ' + '<a href="' + actionUrl + '" target="_blank">' + '#' + pullRequestNumber + ' ' + pullRequestTitle + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
