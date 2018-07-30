@@ -33,8 +33,8 @@ function validateAccessToken(accessToken) {
     dataType: 'json',
     success: function(data) {
       addInfoToMainContainer(data);
-      getActivities(accessToken, addContentsToActivityContentDiv);
-      // setInterval(function() { getActivities(accessToken, addContentsToActivityContentDiv)}, 5000);
+      // getActivities(accessToken, addContentsToActivityContentDiv);
+      setInterval(function() { getActivities(accessToken, addContentsToActivityContentDiv)}, 5000);
     },
     error: function(error) {
       console.log(JSON.stringify(error));
