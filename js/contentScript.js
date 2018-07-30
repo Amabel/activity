@@ -148,14 +148,14 @@ function getCreateEventTypeContents(activity) {
   let iconUrl = '';
   switch(refType) {
     case 'branch':
-      iconUrl = 'images/icons/git-branch.svg';
+      iconUrl = chrome.runtime.getURL('images/icons/git-branch.svg');
       break;
     case 'tag':
     case 'tags':
-      iconUrl = 'images/icons/tag.svg';
+      iconUrl = chrome.runtime.getURL('images/icons/tag.svg');
       break;
     case 'repository':
-      iconUrl = 'images/icons/repo.svg';
+      iconUrl = chrome.runtime.getURL('images/icons/repo.svg');
       break;
     default:
   }
@@ -187,7 +187,7 @@ function getDeleteEventTypeContent(activity) {
   let actionUrl = repoUrl + '/branches';
   let createdAt = activity.created_at;
   let timeFromNow = moment(createdAt).fromNow();
-  let iconUrl = 'images/icons/trashcan.svg';
+  let iconUrl = chrome.runtime.getURL('images/icons/trashcan.svg');
   contents += '<div class="activity-content-wrapper">' + 
                 '<div class="activity-row">' + 
                   '<div class="activity-icon-wrapper">' +
@@ -220,7 +220,7 @@ function getIssueCommentEventTypeContent(activity) {
   let action = activity.payload.action;
   let createdAt = activity.created_at;
   let timeFromNow = moment(createdAt).fromNow();
-  let iconUrl = 'images/icons/comment.svg';
+  let iconUrl = chrome.runtime.getURL('images/icons/comment.svg');
   contents += '<div class="activity-content-wrapper">' + 
                 '<div class="activity-row">' + 
                   '<div class="activity-icon-wrapper">' +
@@ -253,11 +253,11 @@ function getIssuesEventTypeContent(activity) {
   let timeFromNow = moment(createdAt).fromNow();
   let iconUrl = '';
   if (action === 'closed') {
-    iconUrl = 'images/icons/issue-closed.svg';
+    iconUrl = chrome.runtime.getURL('images/icons/issue-closed.svg');
   } else if (action === 'reopened') {
-    iconUrl = 'images/icons/issue-reopened.svg';
+    iconUrl = chrome.runtime.getURL('images/icons/issue-reopened.svg');
   } else {
-    iconUrl = 'images/icons/issue-opened.svg';
+    iconUrl = chrome.runtime.getURL('images/icons/issue-opened.svg');
   }
   contents += '<div class="activity-content-wrapper">' + 
                 '<div class="activity-row">' + 
@@ -298,13 +298,13 @@ function getPullRequestEventTypeContent(activity) {
   let iconUrl = null;
   switch (action) {
     case 'opened':
-      iconUrl = 'images/icons/git-pull-request-open.svg';
+      iconUrl = chrome.runtime.getURL('images/icons/git-pull-request-open.svg');
       break;
     case 'closed':
-      iconUrl = 'images/icons/git-pull-request-closed.svg';
+      iconUrl = chrome.runtime.getURL('images/icons/git-pull-request-closed.svg');
       break;
     case 'merged':
-      iconUrl = 'images/icons/git-merge.svg';
+      iconUrl = chrome.runtime.getURL('images/icons/git-merge.svg');
       break;
     default:
       iconUrl = null;
@@ -338,7 +338,7 @@ function getPushEventTypeContent(activity) {
   let commitWord = numberOfCommit === 1 ? 'commit' : 'commits';
   let createdAt = activity.created_at;
   let timeFromNow = moment(createdAt).fromNow();
-  let iconUrl = 'images/icons/repo-push.svg';
+  let iconUrl = chrome.runtime.getURL('images/icons/repo-push.svg');
   contents += '<div class="activity-content-wrapper">' + 
                 '<div class="activity-row">' + 
                   '<div class="activity-icon-wrapper">' +
@@ -375,7 +375,7 @@ function getPullRequestReviewCommentEventTypeContent(activity) {
   let action = activity.payload.action;
   let createdAt = activity.created_at;
   let timeFromNow = moment(createdAt).fromNow();
-  let iconUrl = 'images/icons/comment.svg';
+  let iconUrl = chrome.runtime.getURL('images/icons/comment.svg');
   contents += '<div class="activity-content-wrapper">' + 
                 '<div class="activity-row">' + 
                   '<div class="activity-icon-wrapper">' +
