@@ -26,7 +26,7 @@
 
 .activity-content-wrapper {
   font-size: 13px;
-  padding: 8px;
+  padding: 12px;
   border-top: 1px solid #e2e4e9;
 
 }
@@ -42,23 +42,46 @@
 
 .activity-row {
   display: flex;
+  align-items: center;
 }
 
 .activity-icon-wrapper {
   display: inline-flex;
   justify-content: center;
   width: 16px;
+  height: 18px;
+}
+
+.activity-icon-wrapper img {
+  height: 18px;
 }
 
 .activity-description {
   display: inline-block;
-  margin-left: 8px;
+  margin-left: 16px;
 }
 
 .action {
-  /* max-width: 230px; */
-  white-space: nowrap;
-  /* overflow: scroll; */
+  display: inline-flex;
+  align-items: center;
+  /* margin-left: 8px; */
+  /* white-space: nowrap; */
+  /* line-height: 21px; */
+}
+
+.action-description {
+
+}
+
+.ga-avatar {
+  display: inline-block;
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+}
+
+.ga-avatar img {
+  width: 100%;
 }
 
 .action .comment-text-wrapper {
