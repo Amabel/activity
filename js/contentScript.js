@@ -6,8 +6,8 @@ let regex = new RegExp(".*Projects.*");
 let nav = $('.pagehead-tabs-item').filter(function () {
   return regex.test($(this).text()); 
 });
-
-var iconUrl = chrome.extension.getURL("images/icons/activities.svg");
+unsupportedActivityNum = 0;
+let iconUrl = chrome.extension.getURL("images/icons/activities.svg");
 activitiesTab = '<a class="pagehead-tabs-item ga-tabs-item">' + 
                   '<img src="' + iconUrl + '" class="octicon ga-icon-wrapper">' +
                   'Activities' +
@@ -22,17 +22,9 @@ $('.ga-tabs-item').click(function() {
   })
   $(this).addClass('selected');
   $(this).children('.ga-icon-wrapper').addClass('ga-selected');
-  $('.orghead').next().empty();
+  
   showContents();
 });
-
-// setInterval(showDiv, 1000);
-// showDiv();
-
-
-function showDiv() {
-  
-}
 
 function validateAccessToken(accessToken) {
   // if verified, returns the user info
@@ -44,15 +36,18 @@ function validateAccessToken(accessToken) {
       // storeAccessToken(accessToken);
       addInfoToMainContainer(data);
       getActivities(accessToken, addContentsToActivityContentDiv);
+      setInterval(function() { getActivities(accessToken, addContentsToActivityContentDiv)}, 5000);
+      // getActivities(accessToken, addContentsToActivityContentDiv);
     },
     error: function(error) {
-      // showTokenSubmit();
       console.log(JSON.stringify(error));
     }
   })
 }
 
 function showContents() {
+  console.log('refresh');
+  $('.orghead').next().remove();
   $('.orghead').after('<div class="ga-container container"></div>');
   let key = 'github_activities_access_token';
   chrome.storage.sync.get([key], function(result) {
@@ -95,9 +90,20 @@ function getActivities(accessToken, callback) {
 function addContentsToActivityContentDiv(data) {
   activities = eval(data);
   console.log(activities);
-  $.each(activities, function(index, activity) {
-    $('.ga-container').append(resolveActivity(activity));
+  let div = '';
+  unsupportedActivityNum = 0;
+  $.each(activities.reverse(), function(index, activity) {
+    $('.ga-container').prepend(resolveActivity(activity));
   });
+  let divNum = data.length - unsupportedActivityNum;
+  console.log('prepend '+ divNum +' divs');
+  if ($('.activity-content-wrapper').length > 30) {
+    console.log('remove');
+    $('.activity-content-wrapper:nth-last-child(-n+' + divNum + ')').remove();
+  } else {
+    console.log($('.activity-content-wrapper').length);
+  }
+  console.log($('.activity-content-wrapper'));
 }
 
 function resolveActivity(activity) {
@@ -129,6 +135,7 @@ function resolveActivity(activity) {
       contentDiv += getPullRequestReviewCommentEventTypeContent(activity);
       break;
     default:
+      unsupportedActivityNum ++;
       console.log('unsupported type: ' + activityType);
   }
   return contentDiv;
