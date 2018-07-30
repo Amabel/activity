@@ -35,14 +35,22 @@
 	{
 		"page": "options.html",
 		"chrome_style": true
+  },
+  
+  "browser_action": 
+	{
+		// "default_icon": "img/icon.png",
+		// 图标悬停时的标题，可选
+    "default_title": "GitHub Activities",
+		"default_popup": "popup.html"
 	},
 
-  "page_action": {
-    "default_popup": "popup.html",
-    "default_icon": {
+  // "page_action": {
+  //   "default_popup": "popup.html",
+  //   "default_icon": {
       
-    }
-  },
+  //   }
+  // },
 
   "icons": {
    
