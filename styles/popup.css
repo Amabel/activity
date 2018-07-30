@@ -43,23 +43,40 @@ a:hover {
 }
 
 .main-container .user-wrapper {
+  display: flex;
 
 }
 
-.main-container .user-wrapper .avatar {
+.main-container .user-wrapper .avatar-wrapper {
   display: inline-block;
   width: 60px;
   height: 60px;
 }
 
-.main-container .user-wrapper .avatar img {
+.main-container .user-wrapper .avatar-wrapper .avatar {
   width: 100%;
+}
+
+.main-container .user-wrapper .description {
+  display: flex;
+  flex-direction: column;
+  margin-left: 18px;
 }
 
 .main-container .user-wrapper .username {
   display: inline-block;
-  margin-left: 18px;
   font-size: 20px;
+}
+
+.logout-button {
+  display: inline-block;
+  margin-top: 4px;
+  color: #777777;
+  font-size: 13px;
+}
+
+.logout-button:hover {
+  cursor: pointer;
 }
 
 .activity-container {
@@ -81,7 +98,6 @@ a:hover {
   font-size: 13px;
   padding: 8px;
   border-top: 1px solid #e2e4e9;
-
 }
 
 .activity-content-wrapper:hover {
@@ -90,7 +106,6 @@ a:hover {
 
 .activity-content-wrapper:first-child {
   border-top: 0;
-  
 }
 
 .activity-row {

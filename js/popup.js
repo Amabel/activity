@@ -33,6 +33,7 @@ function validateAccessToken(accessToken) {
       storeAccessToken(accessToken);
       showMainContainer(data);
       getActivities(accessToken, addContentsToActivityContentDiv);
+      $('.token-input').val('');
     },
     error: function(error) {
       showTokenSubmit();
@@ -89,10 +90,11 @@ function addInfoToMainContainer(data) {
   avatarUrl = myData.avatar_url;
   username = myData.login;
   homePage = myData.html_url;
-  let avatarDiv = '<img src="' + avatarUrl + '">';
-  console.log(avatarUrl);
-  $('.main-container .user-wrapper .avatar').append(avatarDiv);
+  // console.log(avatarUrl);
+  // $('.main-container .user-wrapper .avatar-wrapper').append(avatarDiv);
+  $('.avatar-wrapper .avatar').attr("src", avatarUrl);
   $('#username').text('Hi, ' + username);
+  $('.logout-button').click(logout);
 }
 
 function getActivities(accessToken, callback) {
@@ -409,4 +411,11 @@ function getPullRequestReviewCommentEventTypeContent(myActivity) {
                 '</div>' +           
               '</div>';
   return contents;
+}
+
+function logout() {
+  let key = 'github_activities_access_token';
+  chrome.storage.sync.remove([key], function() {
+    showTokenSubmit();
+  });
 }
