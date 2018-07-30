@@ -85,8 +85,8 @@ function showMainContainer(data) {
 function addInfoToMainContainer(data) {
   // global variables
   myData = eval(data);
-  console.log(JSON.stringify(data));
-  console.log(myData);
+  // console.log(JSON.stringify(data));
+  // console.log(myData);
   avatarUrl = myData.avatar_url;
   username = myData.login;
   homePage = myData.html_url;
@@ -98,7 +98,7 @@ function addInfoToMainContainer(data) {
 }
 
 function getActivities(accessToken, callback) {
-  console.log(myData);
+  // console.log(myData);
   $.ajax({
     url: GITHUB_API_ENDPOINT + '/users/' + username + '/events?access_token=' + accessToken,
     dataType: 'json',
@@ -113,7 +113,7 @@ function getActivities(accessToken, callback) {
 
 function addContentsToActivityContentDiv(data) {
   myActivities = eval(data);
-  console.log(myActivities);
+  // console.log(myActivities);
   $.each(myActivities, function(index, myActivity) {
     $('.activity-contents-wrapper').append(resolveActivity(myActivity));
   });
@@ -122,7 +122,7 @@ function addContentsToActivityContentDiv(data) {
 function resolveActivity(myActivity) {
   let contentDiv = '';
   let activityType = myActivity.type;
-  console.log(activityType);
+  // console.log(activityType);
   switch(activityType) {
     case 'CreateEvent':
       contentDiv += getCreateEventTypeContents(myActivity);

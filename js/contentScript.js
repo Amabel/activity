@@ -33,7 +33,7 @@ function validateAccessToken(accessToken) {
     dataType: 'json',
     success: function(data) {
       addInfoToMainContainer(data);
-      // getActivities(accessToken, addContentsToActivityContentDiv);
+      getActivities(accessToken, addContentsToActivityContentDiv);
       setInterval(function() { getActivities(accessToken, addContentsToActivityContentDiv)}, 5000);
     },
     error: function(error) {
@@ -79,8 +79,7 @@ function getActivities(accessToken, callback) {
 
 function addContentsToActivityContentDiv(data) {
   activities = eval(data);
-  console.log(activities);
-  let div = '';
+  // console.log(activities);
   unsupportedActivityNum = 0;
   $.each(activities.reverse(), function(index, activity) {
     $('.ga-container').prepend(resolveActivity(activity));
