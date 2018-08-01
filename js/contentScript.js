@@ -86,13 +86,30 @@ function addContentsToActivityContentDiv(data, removeDiv) {
   activities = eval(data);
   // console.log(activities);
   unsupportedActivityNum = 0;
-  $.each(activities.reverse(), function(index, activity) {
-    $('.ga-container').prepend(resolveActivity(activity));
-  });
-  let divNum = data.length - unsupportedActivityNum;
-  // if ($('.activity-content-wrapper').length > 30) {
-  if (removeDiv) {
-    $('.activity-content-wrapper:nth-last-child(-n+' + divNum + ')').remove();
+  if (activities.length > 0) {
+    $.each(activities.reverse(), function(index, activity) {
+      $('.ga-container').prepend(resolveActivity(activity));
+    });
+    let divNum = data.length - unsupportedActivityNum;
+    if (removeDiv) {
+      $('.activity-content-wrapper:nth-last-child(-n+' + divNum + ')').remove();
+      $('.ga-no-content-wrapper:last-child').remove();
+    }
+  } else {
+    $('.ga-container').prepend(noContentFoundDiv(activities));
+    if (removeDiv) {
+      $('.ga-no-content-wrapper:last-child').remove();
+    }
+  }
+}
+
+function noContentFoundDiv(activities) {
+  if (activities.length === 0) {
+    return  '<div class="ga-no-content-wrapper">' +
+              '<div class="ga-no-content-description">' +
+                 'Oops! Nothing found here :(<br>' +
+                 'Please make sure you are a team member of this organization.' + 
+            '</div>';
   }
 }
 

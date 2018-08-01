@@ -109,3 +109,11 @@
   color: #777777;
   font-weight: normal;
 }
+
+.ga-no-content-wrapper .ga-no-content-description {
+  padding: 36px 72px;
+  font-size: 26px;
+  font-weight: bold;
+  color: #afafaf;
+  line-height: 76px;
+}
