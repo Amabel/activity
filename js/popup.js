@@ -5,10 +5,16 @@ EVENT_TYPES = [
                 'PullRequestReviewEvent', 'PullRequestReviewCommentEvent'
               ];
 
+DEVELOPMENT_MODE = false;
+
 // Set up google analytics
 var _gaq = _gaq || [];
-let trackID = 'UA-122329936-3'; // for test
-// let trackID = 'UA-122329936-4'; // for production
+let trackID = '';
+if (DEVELOPMENT_MODE) {
+  trackID = 'UA-122329936-3'; // for dev
+} else {
+  trackID = 'UA-122329936-4'; // for production  
+}
 _gaq.push(['_setAccount', trackID]);
 _gaq.push(['_trackPageview']);
 
