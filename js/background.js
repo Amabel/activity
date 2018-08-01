@@ -6,8 +6,8 @@
 
 // Set up google analytics
 var _gaq = _gaq || [];
-let trackID = 'UA-122329936-3'; // for test
-// let trackID = 'UA-122329936-4'; // for production
+// let trackID = 'UA-122329936-3'; // for test
+let trackID = 'UA-122329936-4'; // for production
 _gaq.push(['_setAccount', trackID]);
 _gaq.push(['_trackPageview']);
 
