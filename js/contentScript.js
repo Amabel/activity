@@ -1,4 +1,5 @@
 GITHUB_API_ENDPOINT = 'https://api.github.com';
+GITHUB_PREFIX = 'https://github.com/';
 
 let orgName = window.location.toString().split('/')[3];
 if (orgName === 'orgs') {
@@ -132,6 +133,7 @@ function resolveActivity(activity) {
 function getCreateEventTypeContents(activity) {
   let contents = '';
   let username = activity.actor.login;
+  let userUrl = GITHUB_PREFIX + username;
   let avatarUrl = activity.actor.avatar_url;
   let repoName = activity.repo.name;
   let repoUrl = 'https://github.com/' + repoName;
@@ -165,7 +167,8 @@ function getCreateEventTypeContents(activity) {
                         '<img src="' + avatarUrl + '">' +
                       '</div>' +
                       '<div class="action-description">' +
-                        username + ' created a ' + refType + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        '<a href="' + userUrl + '" class="username">' + username + '</a>' + 
+                        ' created a ' + refType + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -180,6 +183,7 @@ function getCreateEventTypeContents(activity) {
 function getDeleteEventTypeContent(activity) {
   let contents = '';
   let username = activity.actor.login;
+  let userUrl = GITHUB_PREFIX + username;
   let avatarUrl = activity.actor.avatar_url;
   let repoName = activity.repo.name;
   let repoUrl = 'https://github.com/' + repoName;
@@ -200,7 +204,8 @@ function getDeleteEventTypeContent(activity) {
                         '<img src="' + avatarUrl + '">' +
                       '</div>' +
                       '<div class="action-description">' +
-                        username + ' deleted a ' + refType + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        '<a href="' + userUrl + '" class="username">' + username + '</a>' + 
+                        ' deleted a ' + refType + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -215,6 +220,7 @@ function getDeleteEventTypeContent(activity) {
 function getIssueCommentEventTypeContent(activity) {
   let contents = '';
   let username = activity.actor.login;
+  let userUrl = GITHUB_PREFIX + username;
   let avatarUrl = activity.actor.avatar_url;
   let repoName = activity.repo.name;
   let repoUrl = 'https://github.com/' + repoName;
@@ -240,7 +246,8 @@ function getIssueCommentEventTypeContent(activity) {
                         '<img src="' + avatarUrl + '">' +
                       '</div>' +
                       '<div class="action-description">' +
-                        username + ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a href="' + issueUrl + '" target="_blank"> #' + issueNum + ' ' + issueTitle + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        '<a href="' + userUrl + '" class="username">' + username + '</a>' + 
+                        ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a href="' + issueUrl + '" target="_blank"> #' + issueNum + ' ' + issueTitle + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -255,6 +262,7 @@ function getIssueCommentEventTypeContent(activity) {
 function getIssuesEventTypeContent(activity) {
   let contents = '';
   let username = activity.actor.login;
+  let userUrl = GITHUB_PREFIX + username;
   let avatarUrl = activity.actor.avatar_url;
   let repoName = activity.repo.name;
   let repoUrl = 'https://github.com/' + repoName;
@@ -284,7 +292,8 @@ function getIssuesEventTypeContent(activity) {
                         '<img src="' + avatarUrl + '">' +
                       '</div>' +
                       '<div class="action-description">' +
-                        username + ' ' + action + ' an issue ' + ' <a href="' + actionUrl + '" target="_blank">#' + issueNum + ' ' + issueTitle + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        '<a href="' + userUrl + '" class="username">' + username + '</a>' + 
+                        ' ' + action + ' an issue ' + ' <a href="' + actionUrl + '" target="_blank">#' + issueNum + ' ' + issueTitle + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -299,6 +308,7 @@ function getIssuesEventTypeContent(activity) {
 function getPullRequestEventTypeContent(activity) {
   let contents = '';
   let username = activity.actor.login;
+  let userUrl = GITHUB_PREFIX + username;
   let avatarUrl = activity.actor.avatar_url;
   let repoName = activity.repo.name;
   let repoUrl = 'https://github.com/' + repoName;
@@ -340,7 +350,8 @@ function getPullRequestEventTypeContent(activity) {
                         '<img src="' + avatarUrl + '">' +
                       '</div>' +
                       '<div class="action-description">' +
-                        username + ' ' + action + ' a pull request ' + '<a href="' + actionUrl + '" target="_blank">' + '#' + pullRequestNumber + ' ' + pullRequestTitle + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        '<a href="' + userUrl + '" class="username">' + username + '</a>' + 
+                        ' ' + action + ' a pull request ' + '<a href="' + actionUrl + '" target="_blank">' + '#' + pullRequestNumber + ' ' + pullRequestTitle + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -355,6 +366,7 @@ function getPullRequestEventTypeContent(activity) {
 function getPushEventTypeContent(activity) {
   let contents = '';
   let username = activity.actor.login;
+  let userUrl = GITHUB_PREFIX + username;
   let avatarUrl = activity.actor.avatar_url;
   let repoName = activity.repo.name;
   let repoUrl = 'https://github.com/' + repoName;
@@ -376,7 +388,8 @@ function getPushEventTypeContent(activity) {
                         '<img src="' + avatarUrl + '">' +
                       '</div>' +
                       '<div class="action-description">' +
-                        username + ' pushed ' + numberOfCommit + ' ' + commitWord + ' into ' + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        '<a href="' + userUrl + '" class="username">' + username + '</a>' + 
+                        ' pushed ' + numberOfCommit + ' ' + commitWord + ' into ' + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -395,6 +408,7 @@ function getPullRequestReviewEventTypeContent(activity) {
 function getPullRequestReviewCommentEventTypeContent(activity) {
   let contents = '';
   let username = activity.actor.login;
+  let userUrl = GITHUB_PREFIX + username;
   let avatarUrl = activity.actor.avatar_url;
   let repoName = activity.repo.name;
   let repoUrl = 'https://github.com/' + repoName;
@@ -419,7 +433,8 @@ function getPullRequestReviewCommentEventTypeContent(activity) {
                         '<img src="' + avatarUrl + '">' +
                       '</div>' +
                       '<div class="action-description">' +
-                        username + ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a href="' + pullResuestUrl + '" target="_blank"> #' + pullRequestNum + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        '<a href="' + userUrl + '" class="username">' + username + '</a>' + 
+                        ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a href="' + pullResuestUrl + '" target="_blank"> #' + pullRequestNum + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +

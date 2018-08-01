@@ -69,8 +69,10 @@
   /* line-height: 21px; */
 }
 
-.action-description {
-
+.action-description .username {
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
 }
 
 .ga-avatar {
