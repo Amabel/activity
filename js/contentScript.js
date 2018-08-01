@@ -53,10 +53,20 @@ function showContents() {
     accessToken = result[key];
     if (!accessToken) {
       console.log('please submit access token');
+      $('.ga-container').append(requireSubmitTokenDiv());
     } else {
       validateAccessToken(accessToken);
     }
   });
+}
+
+function requireSubmitTokenDiv() {
+  return  '<div class="ga-require-submit-container">' +
+            '<div class="qa-requiresubmit-wrapper ga-not-found">' +
+              'Can\'t find your token :(<br>' +
+              'Please submit your GitHub access token with the repo scope.' +
+            '</div>' +
+          '</div>';
 }
 
 function addInfoToMainContainer(data) {
@@ -106,7 +116,7 @@ function addContentsToActivityContentDiv(data, removeDiv) {
 function noContentFoundDiv(activities) {
   if (activities.length === 0) {
     return  '<div class="ga-no-content-wrapper">' +
-              '<div class="ga-no-content-description">' +
+              '<div class="ga-no-content-description ga-not-found">' +
                  'Oops! Nothing found here :(<br>' +
                  'Please make sure you are a team member of this organization.' + 
             '</div>';
