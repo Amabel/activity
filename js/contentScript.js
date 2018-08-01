@@ -69,7 +69,7 @@ function addInfoToMainContainer(data) {
 
 function getActivities(accessToken, removeDiv, callback) {
   // Google analytics
-  chrome.runtime.sendMessage({eventCategory: 'orgnizationPage', eventAction: 'getActivities'});
+  // chrome.runtime.sendMessage({eventCategory: 'orgnizationPage', eventAction: 'getActivities'});
   $.ajax({
     url: GITHUB_API_ENDPOINT + '/users/' + username + '/events/orgs/' + orgName + '?access_token=' + accessToken,
     dataType: 'json',
