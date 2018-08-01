@@ -168,7 +168,7 @@ function getCreateEventTypeContents(activity) {
                       '</div>' +
                       '<div class="action-description">' +
                         '<a href="' + userUrl + '" class="username">' + username + '</a>' + 
-                        ' created a ' + refType + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        ' created a ' + refType + ' <a class="ga-bold" href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -205,7 +205,7 @@ function getDeleteEventTypeContent(activity) {
                       '</div>' +
                       '<div class="action-description">' +
                         '<a href="' + userUrl + '" class="username">' + username + '</a>' + 
-                        ' deleted a ' + refType + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        ' deleted a ' + refType + ' <a class="ga-bold" href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -247,7 +247,7 @@ function getIssueCommentEventTypeContent(activity) {
                       '</div>' +
                       '<div class="action-description">' +
                         '<a href="' + userUrl + '" class="username">' + username + '</a>' + 
-                        ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a href="' + issueUrl + '" target="_blank"> #' + issueNum + ' ' + issueTitle + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a class="ga-bold" href="' + issueUrl + '" target="_blank">' + issueTitle + ' ' + '<span class="ga-issue-number">#' + issueNum + '</span></a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -293,7 +293,7 @@ function getIssuesEventTypeContent(activity) {
                       '</div>' +
                       '<div class="action-description">' +
                         '<a href="' + userUrl + '" class="username">' + username + '</a>' + 
-                        ' ' + action + ' an issue ' + ' <a href="' + actionUrl + '" target="_blank">#' + issueNum + ' ' + issueTitle + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        ' ' + action + ' an issue ' + ' <a class="ga-bold" href="' + actionUrl + '" target="_blank">#' + issueNum + ' ' + issueTitle + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -351,7 +351,7 @@ function getPullRequestEventTypeContent(activity) {
                       '</div>' +
                       '<div class="action-description">' +
                         '<a href="' + userUrl + '" class="username">' + username + '</a>' + 
-                        ' ' + action + ' a pull request ' + '<a href="' + actionUrl + '" target="_blank">' + '#' + pullRequestNumber + ' ' + pullRequestTitle + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        ' ' + action + ' a pull request ' + '<a class="ga-bold" href="' + actionUrl + '" target="_blank">' +  pullRequestTitle + ' ' + '<span class="ga-issue-number">#' + pullRequestNumber + '</span></a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -389,7 +389,7 @@ function getPushEventTypeContent(activity) {
                       '</div>' +
                       '<div class="action-description">' +
                         '<a href="' + userUrl + '" class="username">' + username + '</a>' + 
-                        ' pushed ' + numberOfCommit + ' ' + commitWord + ' into ' + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        ' pushed ' + numberOfCommit + ' ' + commitWord + ' into ' + ' <a class="ga-bold" href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -434,7 +434,7 @@ function getPullRequestReviewCommentEventTypeContent(activity) {
                       '</div>' +
                       '<div class="action-description">' +
                         '<a href="' + userUrl + '" class="username">' + username + '</a>' + 
-                        ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a href="' + pullResuestUrl + '" target="_blank"> #' + pullRequestNum + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a class="ga-bold" href="' + pullResuestUrl + '" target="_blank">' + title + ' ' + '<span class="ga-issue-number">#' + pullRequestNum + ' '  + '</span></a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +

@@ -1,3 +1,9 @@
+.ga-bold {
+  font-weight: bold;
+}
+
+
+
 .ga-tabs-item:hover {
   cursor: pointer;
 }
@@ -43,6 +49,10 @@
 .activity-row {
   display: flex;
   align-items: center;
+}
+
+.activity-row a:hover {
+  text-decoration: none;
 }
 
 .activity-icon-wrapper {
@@ -93,4 +103,8 @@
 .time-stamp {
   font-size: 10px;
   color: #a0a0a0;
+}
+
+.ga-issue-number {
+  color: #777777;
 }
