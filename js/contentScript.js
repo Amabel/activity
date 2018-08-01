@@ -150,6 +150,9 @@ function resolveActivity(activity) {
     case 'PullRequestReviewCommentEvent':
       contentDiv += getPullRequestReviewCommentEventTypeContent(activity);
       break;
+    case 'ReleaseEvent':
+      contentDiv += getReleaseEventTypeContent(activity);
+      break;
     default:
       unsupportedActivityNum ++;
       console.log('unsupported type: ' + activityType);
@@ -463,6 +466,43 @@ function getPullRequestReviewCommentEventTypeContent(activity) {
                       '<div class="action-description">' +
                         '<a href="' + userUrl + '" class="username">' + username + '</a>' + 
                         ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a class="ga-bold" href="' + pullResuestUrl + '" target="_blank">' + title + ' ' + '<span class="ga-issue-number">#' + pullRequestNum + ' '  + '</span></a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                      '</div>' +
+                    '</div>' +
+                    '<div class="time-stamp">' +
+                      timeFromNow
+                    '</div>' +
+                  '</div>'
+                '</div>' +           
+              '</div>';
+  return contents;
+}
+
+function getReleaseEventTypeContent(activity) {
+  let contents = '';
+  let username = activity.actor.login;
+  let userUrl = GITHUB_PREFIX + username;
+  let avatarUrl = activity.actor.avatar_url;
+  let repoName = activity.repo.name;
+  let repoUrl = 'https://github.com/' + repoName;
+  let releaseName = activity.payload.release.name;
+  let actionUrl = activity.payload.release.html_url;
+  let preRelease = activity.payload.release.prerelease ? 'pre-' : '';
+  let createdAt = activity.created_at;
+  let timeFromNow = moment(createdAt).fromNow();
+  let iconUrl = chrome.runtime.getURL('images/icons/package.svg');
+  contents += '<div class="activity-content-wrapper">' + 
+                '<div class="activity-row">' + 
+                  '<div class="activity-icon-wrapper">' +
+                    '<img src="' + iconUrl + '">' +
+                  '</div>' + 
+                  '<div class="activity-description">' + 
+                    '<div class="action">' + 
+                      '<div class="ga-avatar">' +
+                        '<img src="' + avatarUrl + '">' +
+                      '</div>' +
+                      '<div class="action-description">' +
+                        '<a href="' + userUrl + '" class="username">' + username + '</a>' + 
+                        ' published a ' + preRelease + 'release ' + '<a class="ga-bold" href="' + actionUrl + '" target="_blank">' + releaseName + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
