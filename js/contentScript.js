@@ -36,8 +36,8 @@ function validateAccessToken(accessToken) {
     dataType: 'json',
     success: function(data) {
       addInfoToMainContainer(data);
-      getActivities(accessToken, addContentsToActivityContentDiv);
-      setInterval(function() { getActivities(accessToken, addContentsToActivityContentDiv)}, 5000);
+      getActivities(accessToken, false, addContentsToActivityContentDiv);
+      setInterval(function() { getActivities(accessToken, true, addContentsToActivityContentDiv)}, 5000);
     },
     error: function(error) {
       console.log(JSON.stringify(error));
@@ -67,14 +67,14 @@ function addInfoToMainContainer(data) {
   homePage = myData.html_url;
 }
 
-function getActivities(accessToken, callback) {
+function getActivities(accessToken, removeDiv, callback) {
   // Google analytics
   chrome.runtime.sendMessage({eventCategory: 'orgnizationPage', eventAction: 'getActivities'});
   $.ajax({
     url: GITHUB_API_ENDPOINT + '/users/' + username + '/events/orgs/' + orgName + '?access_token=' + accessToken,
     dataType: 'json',
     success: function(data) {
-      callback(data);
+      callback(data, removeDiv);
     },
     error: function(error) {
       console.log(JSON.stringify(error));
@@ -82,7 +82,7 @@ function getActivities(accessToken, callback) {
   })
 }
 
-function addContentsToActivityContentDiv(data) {
+function addContentsToActivityContentDiv(data, removeDiv) {
   activities = eval(data);
   // console.log(activities);
   unsupportedActivityNum = 0;
@@ -90,7 +90,8 @@ function addContentsToActivityContentDiv(data) {
     $('.ga-container').prepend(resolveActivity(activity));
   });
   let divNum = data.length - unsupportedActivityNum;
-  if ($('.activity-content-wrapper').length > 30) {
+  // if ($('.activity-content-wrapper').length > 30) {
+  if (removeDiv) {
     $('.activity-content-wrapper:nth-last-child(-n+' + divNum + ')').remove();
   }
 }
