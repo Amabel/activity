@@ -17,6 +17,8 @@ activitiesTab = '<a class="pagehead-tabs-item ga-tabs-item">' +
 nav.before(activitiesTab);
 
 $('.ga-tabs-item').click(function() {
+  // Google analytics
+  chrome.runtime.sendMessage({eventCategory: 'orgnizationPage', eventAction: 'showActivities'});
   $('.pagehead-tabs-item').each(function() {
     $(this).removeClass('selected');
     $(this).children('.ga-icon-wrapper').removeClass('ga-selected');
@@ -65,6 +67,8 @@ function addInfoToMainContainer(data) {
 }
 
 function getActivities(accessToken, callback) {
+  // Google analytics
+  chrome.runtime.sendMessage({eventCategory: 'orgnizationPage', eventAction: 'getActivities'});
   $.ajax({
     url: GITHUB_API_ENDPOINT + '/users/' + username + '/events/orgs/' + orgName + '?access_token=' + accessToken,
     dataType: 'json',
