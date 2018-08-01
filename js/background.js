@@ -4,17 +4,25 @@
 
 'use strict';
 
-DEVELOPMENT_MODE = false;
+// Global variables
+// GITHUB_API_ENDPOINT = newFunction();
+
+// chrome.runtime.onInstalled.addListener(function() {
+//   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+//     chrome.declarativeContent.onPageChanged.addRules([{
+//       conditions: [new chrome.declarativeContent.PageStateMatcher({
+//         pageUrl: {hostEquals: 'github.com'},
+//       })
+//       ],
+//       actions: [new chrome.declarativeContent.ShowPageAction()]
+//     }]);
+//   });
+// });
 
 // Set up google analytics
 var _gaq = _gaq || [];
-let trackID = '';
-if (DEVELOPMENT_MODE) {
-  trackID = 'UA-122329936-3'; // for dev
-} else {
-  trackID = 'UA-122329936-4'; // for production  
-}
-
+let trackID = 'UA-122329936-3'; // for test
+// let trackID = 'UA-122329936-4'; // for production
 _gaq.push(['_setAccount', trackID]);
 _gaq.push(['_trackPageview']);
 
