@@ -325,7 +325,7 @@ function getIssuesEventTypeContent(activity) {
                       '</div>' +
                       '<div class="action-description">' +
                         '<a href="' + userUrl + '" class="username">' + username + '</a>' + 
-                        ' ' + action + ' an issue ' + ' <a class="ga-bold" href="' + actionUrl + '" target="_blank">#' + issueNum + ' ' + issueTitle + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                        ' ' + action + ' an issue ' + ' <a class="ga-bold" href="' + actionUrl + '" target="_blank">' + issueTitle + ' ' +'<span class="ga-issue-number">#' + issueNum + '</span></a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -405,7 +405,7 @@ function getPushEventTypeContent(activity) {
   let ref = activity.payload.ref.substring(11);
   let actionUrl = activity.payload.commits[0] ? repoUrl + '/commits/' + activity.payload.commits[0].sha : '#';
   let numberOfCommit = activity.payload.commits.length;
-  let commitWord = numberOfCommit === 1 ? 'commit' : 'commits';
+  let commitWord = numberOfCommit > 1 ? 'commits' : 'commit';
   let createdAt = activity.created_at;
   let timeFromNow = moment(createdAt).fromNow();
   let iconUrl = chrome.runtime.getURL('images/icons/repo-push.svg');
