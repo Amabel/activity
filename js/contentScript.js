@@ -37,7 +37,7 @@ function validateAccessToken(accessToken) {
     success: function(data) {
       addInfoToMainContainer(data);
       getActivities(accessToken, false, addContentsToActivityContentDiv);
-      // setInterval(function() { getActivities(accessToken, true, addContentsToActivityContentDiv)}, 5000);
+      setInterval(function() { getActivities(accessToken, true, addContentsToActivityContentDiv)}, 5000);
     },
     error: function(error) {
       console.log(JSON.stringify(error));
@@ -94,11 +94,11 @@ function getActivities(accessToken, removeDiv, callback) {
 
 function addContentsToActivityContentDiv(data, removeDiv) {
   activities = eval(data);
-  console.log(activities);
+  // console.log(activities);
   unsupportedActivityNum = 0;
   if (activities.length > 0) {
     $.each(activities.reverse(), function(index, activity) {
-      console.log(activity);
+      // console.log(activity);
       $('.ga-container').prepend(resolveActivity(activity));
     });
     let divNum = data.length - unsupportedActivityNum;
