@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "GitHub Activities",
+  "name": "Activities for GitHub",
   "version": "0.0.12",
-  "description": "Activities for GitHub",
+  "description": "Show your personal and organization events on GitHub.",
 
   "permissions": [
     "activeTab",
@@ -21,7 +21,7 @@
       "matches": ["*://github.com/*"],
       "css": ["styles/activities.css"],
       "js": [
-        "lib/js/jquery.min.js", 
+        "lib/js/jquery.min.js",
         "js/contentScript.js",
         "lib/js/popper.min.js",
         "lib/js/bootstrap.min.js",
@@ -36,15 +36,17 @@
 		"page": "options.html",
 		"chrome_style": true
   },
-  
-  "browser_action": 
+
+  "browser_action":
 	{
     "default_title": "GitHub Activities",
 		"default_popup": "popup.html"
 	},
 
   "icons": {
-   
+    "16": "images/icons/logo/logo-16x16.png",
+    "48": "images/icons/logo/logo-48x48.png",
+    "128": "images/icons/logo/logo-128x128.png"
   },
 
   "web_accessible_resources": [
