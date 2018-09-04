@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "GitHub Activities",
+  "name": "Activities for GitHub",
   "version": "0.0.12",
-  "description": "Activities for GitHub",
+  "description": "Show your personal and organization events on GitHub.",
 
   "permissions": [
     "activeTab",
@@ -44,7 +44,9 @@
 	},
 
   "icons": {
-
+    "16": "images/icons/logo/logo-16x16.png",
+    "48": "images/icons/logo/logo-48x48.png",
+    "128": "images/icons/logo/logo-128x128.png"
   },
 
   "web_accessible_resources": [
