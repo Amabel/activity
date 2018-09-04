@@ -1,6 +1,6 @@
 GITHUB_API_ENDPOINT = 'https://api.github.com';
 EVENT_TYPES = [
-                'CreateEvent', 'DeleteEvent', 'IssueCommentEvent', 
+                'CreateEvent', 'DeleteEvent', 'IssueCommentEvent',
                 'IssuesEvent', 'PullRequestEvent', 'PushEvent',
                 'PullRequestReviewEvent', 'PullRequestReviewCommentEvent'
               ];
@@ -194,20 +194,20 @@ function getCreateEventTypeContents(myActivity) {
       break;
     default:
   }
-  contents += '<div class="activity-content-wrapper">' + 
-                '<div class="activity-row">' + 
+  contents += '<div class="activity-content-wrapper">' +
+                '<div class="activity-row">' +
                   '<div class="activity-icon-wrapper">' +
                     '<img src="' + iconUrl + '">' +
-                  '</div>' + 
-                  '<div class="activity-description">' + 
-                    '<div class="action">' + 
-                      'created a ' + refType + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                  '</div>' +
+                  '<div class="activity-description">' +
+                    '<div class="action">' +
+                      'created a ' + refType + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
                     '</div>' +
                     '<div class="time-stamp">' +
                       timeFromNow
                     '</div>' +
                   '</div>'
-                '</div>' +           
+                '</div>' +
               '</div>';
   return contents;
 }
@@ -223,20 +223,20 @@ function getDeleteEventTypeContent(myActivity) {
   let createdAt = myActivity.created_at;
   let timeFromNow = moment(createdAt).fromNow();
   let iconUrl = 'images/icons/trashcan.svg';
-  contents += '<div class="activity-content-wrapper">' + 
-                '<div class="activity-row">' + 
+  contents += '<div class="activity-content-wrapper">' +
+                '<div class="activity-row">' +
                   '<div class="activity-icon-wrapper">' +
                     '<img src="' + iconUrl + '">' +
-                  '</div>' + 
-                  '<div class="activity-description">' + 
-                    '<div class="action">' + 
-                      'deleted a ' + refType + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                  '</div>' +
+                  '<div class="activity-description">' +
+                    '<div class="action">' +
+                      'deleted a ' + refType + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
                     '</div>' +
                     '<div class="time-stamp">' +
                       timeFromNow
                     '</div>' +
                   '</div>'
-                '</div>' +           
+                '</div>' +
               '</div>';
   return contents;
 }
@@ -256,20 +256,20 @@ function getIssueCommentEventTypeContent(myActivity) {
   let createdAt = myActivity.created_at;
   let timeFromNow = moment(createdAt).fromNow();
   let iconUrl = 'images/icons/comment.svg';
-  contents += '<div class="activity-content-wrapper">' + 
-                '<div class="activity-row">' + 
+  contents += '<div class="activity-content-wrapper">' +
+                '<div class="activity-row">' +
                   '<div class="activity-icon-wrapper">' +
                     '<img src="' + iconUrl + '">' +
-                  '</div>' + 
-                  '<div class="activity-description">' + 
-                    '<div class="action">' + 
-                      action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a href="' + issueUrl + '" target="_blank"> #' + issueNum + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                  '</div>' +
+                  '<div class="activity-description">' +
+                    '<div class="action">' +
+                      action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a href="' + issueUrl + '" target="_blank"> #' + issueNum + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
                     '</div>' +
                     '<div class="time-stamp">' +
                       timeFromNow
                     '</div>' +
                   '</div>'
-                '</div>' +           
+                '</div>' +
               '</div>';
   return contents;
 }
@@ -294,20 +294,20 @@ function getIssuesEventTypeContent(myActivity) {
   } else {
     iconUrl = 'images/icons/issue-opened.svg';
   }
-  contents += '<div class="activity-content-wrapper">' + 
-                '<div class="activity-row">' + 
+  contents += '<div class="activity-content-wrapper">' +
+                '<div class="activity-row">' +
                   '<div class="activity-icon-wrapper">' +
                     '<img src="' + iconUrl + '">' +
-                  '</div>' + 
-                  '<div class="activity-description">' + 
-                    '<div class="action">' + 
-                      action + ' an issue ' + ' <a href="' + actionUrl + '" target="_blank">#' + issueNum + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                  '</div>' +
+                  '<div class="activity-description">' +
+                    '<div class="action">' +
+                      action + ' an issue ' + ' <a href="' + actionUrl + '" target="_blank">#' + issueNum + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
                     '</div>' +
                     '<div class="time-stamp">' +
                       timeFromNow
                     '</div>' +
                   '</div>'
-                '</div>' +           
+                '</div>' +
               '</div>';
   return contents;
 }
@@ -344,20 +344,20 @@ function getPullRequestEventTypeContent(myActivity) {
     default:
       iconUrl = null;
   }
-  contents += '<div class="activity-content-wrapper">' + 
-                '<div class="activity-row">' + 
+  contents += '<div class="activity-content-wrapper">' +
+                '<div class="activity-row">' +
                   '<div class="activity-icon-wrapper">' +
                     '<img src="' + iconUrl + '">' +
-                  '</div>' + 
-                  '<div class="activity-description">' + 
-                    '<div class="action">' + 
-                      action + ' a pull request ' + '<a href="' + actionUrl + '" target="_blank">' + '#' + pullRequestNumber + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                  '</div>' +
+                  '<div class="activity-description">' +
+                    '<div class="action">' +
+                      action + ' a pull request ' + '<a href="' + actionUrl + '" target="_blank">' + '#' + pullRequestNumber + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
                     '</div>' +
                     '<div class="time-stamp">' +
                       timeFromNow
                     '</div>' +
                   '</div>'
-                '</div>' +           
+                '</div>' +
               '</div>';
   return contents;
 }
@@ -374,20 +374,20 @@ function getPushEventTypeContent(myActivity) {
   let createdAt = myActivity.created_at;
   let timeFromNow = moment(createdAt).fromNow();
   let iconUrl = 'images/icons/repo-push.svg';
-  contents += '<div class="activity-content-wrapper">' + 
-                '<div class="activity-row">' + 
+  contents += '<div class="activity-content-wrapper">' +
+                '<div class="activity-row">' +
                   '<div class="activity-icon-wrapper">' +
                     '<img src="' + iconUrl + '">' +
-                  '</div>' + 
-                  '<div class="activity-description">' + 
-                    '<div class="action">' + 
-                      'pushed ' + numberOfCommit + ' ' + commitWord + ' into ' + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                  '</div>' +
+                  '<div class="activity-description">' +
+                    '<div class="action">' +
+                      'pushed ' + numberOfCommit + ' ' + commitWord + ' into ' + ' <a href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
                     '</div>' +
                     '<div class="time-stamp">' +
                       timeFromNow
                     '</div>' +
                   '</div>'
-                '</div>' +           
+                '</div>' +
               '</div>';
   return contents;
 }
@@ -411,20 +411,20 @@ function getPullRequestReviewCommentEventTypeContent(myActivity) {
   let createdAt = myActivity.created_at;
   let timeFromNow = moment(createdAt).fromNow();
   let iconUrl = 'images/icons/comment.svg';
-  contents += '<div class="activity-content-wrapper">' + 
-                '<div class="activity-row">' + 
+  contents += '<div class="activity-content-wrapper">' +
+                '<div class="activity-row">' +
                   '<div class="activity-icon-wrapper">' +
                     '<img src="' + iconUrl + '">' +
-                  '</div>' + 
-                  '<div class="activity-description">' + 
-                    '<div class="action">' + 
-                      action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a href="' + pullResuestUrl + '" target="_blank"> #' + pullRequestNum + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' + 
+                  '</div>' +
+                  '<div class="activity-description">' +
+                    '<div class="action">' +
+                      action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a href="' + pullResuestUrl + '" target="_blank"> #' + pullRequestNum + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
                     '</div>' +
                     '<div class="time-stamp">' +
                       timeFromNow
                     '</div>' +
                   '</div>'
-                '</div>' +           
+                '</div>' +
               '</div>';
   return contents;
 }
