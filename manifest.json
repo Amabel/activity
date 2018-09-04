@@ -21,7 +21,7 @@
       "matches": ["*://github.com/*"],
       "css": ["styles/activities.css"],
       "js": [
-        "lib/js/jquery.min.js", 
+        "lib/js/jquery.min.js",
         "js/contentScript.js",
         "lib/js/popper.min.js",
         "lib/js/bootstrap.min.js",
@@ -36,15 +36,15 @@
 		"page": "options.html",
 		"chrome_style": true
   },
-  
-  "browser_action": 
+
+  "browser_action":
 	{
     "default_title": "GitHub Activities",
 		"default_popup": "popup.html"
 	},
 
   "icons": {
-   
+
   },
 
   "web_accessible_resources": [
