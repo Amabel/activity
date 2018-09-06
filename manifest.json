@@ -39,7 +39,7 @@
 
   "browser_action":
 	{
-    "default_title": "GitHub Activities",
+    "default_title": "Activities for GitHub",
 		"default_popup": "popup.html"
 	},
 
