@@ -18,8 +18,18 @@ a:hover {
 }
 
 .title-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   text-align: center;
+}
+
+.title-wrapper img {
+  margin-right: 6px;
+  width: 24px;
+  height: 24px;
+  object-fit: scale-down;
 }
 
 .divider {
