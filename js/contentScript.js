@@ -167,8 +167,9 @@ function getCreateEventTypeContents(activity) {
   let username = activity.actor.login;
   let userUrl = GITHUB_PREFIX + username;
   let avatarUrl = activity.actor.avatar_url;
+  let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + repoName;
+  let repoUrl = 'https://github.com/' + orgRepoName;
   let refType = activity.payload.ref_type;
   let ref = activity.payload.ref || '';
   let actionUrl = repoUrl + '/tree/' + ref;
@@ -217,8 +218,9 @@ function getDeleteEventTypeContent(activity) {
   let username = activity.actor.login;
   let userUrl = GITHUB_PREFIX + username;
   let avatarUrl = activity.actor.avatar_url;
+  let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + repoName;
+  let repoUrl = 'https://github.com/' + orgRepoName;
   let refType = activity.payload.ref_type;
   let ref = activity.payload.ref;
   let actionUrl = repoUrl + '/branches';
@@ -254,8 +256,9 @@ function getIssueCommentEventTypeContent(activity) {
   let username = activity.actor.login;
   let userUrl = GITHUB_PREFIX + username;
   let avatarUrl = activity.actor.avatar_url;
+  let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + repoName;
+  let repoUrl = 'https://github.com/' + orgRepoName;
   let comment = activity.payload.comment;
   let issue = activity.payload.issue;
   let issueTitle = issue.title;
@@ -296,8 +299,9 @@ function getIssuesEventTypeContent(activity) {
   let username = activity.actor.login;
   let userUrl = GITHUB_PREFIX + username;
   let avatarUrl = activity.actor.avatar_url;
+  let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + repoName;
+  let repoUrl = 'https://github.com/' + orgRepoName;
   let issue = activity.payload.issue;
   let issueNum = issue.number;
   let issueTitle = issue.title;
@@ -342,8 +346,9 @@ function getPullRequestEventTypeContent(activity) {
   let username = activity.actor.login;
   let userUrl = GITHUB_PREFIX + username;
   let avatarUrl = activity.actor.avatar_url;
+  let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + repoName;
+  let repoUrl = 'https://github.com/' + orgRepoName;
   let pullRequestNumber = activity.payload.pull_request.number;
   let pullRequestTitle = activity.payload.pull_request.title;
   // action
@@ -400,8 +405,9 @@ function getPushEventTypeContent(activity) {
   let username = activity.actor.login;
   let userUrl = GITHUB_PREFIX + username;
   let avatarUrl = activity.actor.avatar_url;
+  let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + repoName;
+  let repoUrl = 'https://github.com/' + orgRepoName;
   let ref = activity.payload.ref.substring(11);
   let actionUrl = activity.payload.commits[0] ? repoUrl + '/commits/' + activity.payload.commits[0].sha : '#';
   let numberOfCommit = activity.payload.commits.length;
@@ -442,8 +448,9 @@ function getPullRequestReviewCommentEventTypeContent(activity) {
   let username = activity.actor.login;
   let userUrl = GITHUB_PREFIX + username;
   let avatarUrl = activity.actor.avatar_url;
+  let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + repoName;
+  let repoUrl = 'https://github.com/' + orgRepoName;
   let comment = activity.payload.comment;
   let pullRequest = activity.payload.pull_request;
   let commentUrl = comment.html_url;
@@ -483,8 +490,9 @@ function getReleaseEventTypeContent(activity) {
   let username = activity.actor.login;
   let userUrl = GITHUB_PREFIX + username;
   let avatarUrl = activity.actor.avatar_url;
+  let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + repoName;
+  let repoUrl = 'https://github.com/' + orgRepoName;
   let releaseName = activity.payload.release.name;
   let actionUrl = activity.payload.release.html_url;
   let preRelease = activity.payload.release.prerelease ? 'pre-' : '';
