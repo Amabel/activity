@@ -483,7 +483,7 @@ function getPullRequestReviewCommentEventTypeContent(activity) {
   let commentUrl = comment.html_url;
   let pullRequestNum = pullRequest.number;
   let pullResuestUrl = pullRequest.html_url;
-  let labels =  pull_request.labels;
+  let labels =  pullRequest.labels;
   let labelsDiv = '';
   labels.forEach(function(label) {
     labelsDiv += '<span class="label" style="background-color:#' + label.color + '">' +
