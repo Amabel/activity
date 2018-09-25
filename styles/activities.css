@@ -43,7 +43,6 @@
 
 .activity-content-wrapper:first-child {
   border-top: 0;
-  
 }
 
 .activity-row {
@@ -83,6 +82,11 @@
   font-weight: bold;
   text-decoration: none;
   color: black;
+}
+
+.action-description .label {
+  margin: 0 2px;
+  color: #000000;
 }
 
 .ga-avatar {

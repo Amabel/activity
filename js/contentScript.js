@@ -265,6 +265,13 @@ function getIssueCommentEventTypeContent(activity) {
   let commentUrl = comment.html_url;
   let issueNum = issue.number;
   let issueUrl = issue.html_url;
+  let labels = issue.labels;
+  let labelsDiv = '';
+  labels.forEach(function(label) {
+    labelsDiv += '<span class="label" style="background-color:#' + label.color + '">' +
+                   label.name +
+                 '</span>';
+  });
   let title = issue.title;
   let action = activity.payload.action;
   let createdAt = activity.created_at;
@@ -282,7 +289,9 @@ function getIssueCommentEventTypeContent(activity) {
                       '</div>' +
                       '<div class="action-description">' +
                         '<a href="' + userUrl + '" class="username">' + username + '</a>' +
-                        ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a class="ga-bold" href="' + issueUrl + '" target="_blank">' + issueTitle + ' ' + '<span class="ga-issue-number">#' + issueNum + '</span></a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
+                        ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a class="ga-bold" href="' + issueUrl + '" target="_blank">' + issueTitle + ' ' + '<span class="ga-issue-number">#' + issueNum + '</span></a>' +
+                        labelsDiv +
+                        ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -306,6 +315,13 @@ function getIssuesEventTypeContent(activity) {
   let issueNum = issue.number;
   let issueTitle = issue.title;
   let actionUrl = issue.html_url;
+  let labels = issue.labels;
+  let labelsDiv = '';
+  labels.forEach(function(label) {
+    labelsDiv += '<span class="label" style="background-color:#' + label.color + '">' +
+                   label.name +
+                 '</span>';
+  });
   let action = activity.payload.action;
   let createdAt = activity.created_at;
   let timeFromNow = moment(createdAt).fromNow();
@@ -329,7 +345,9 @@ function getIssuesEventTypeContent(activity) {
                       '</div>' +
                       '<div class="action-description">' +
                         '<a href="' + userUrl + '" class="username">' + username + '</a>' +
-                        ' ' + action + ' an issue ' + ' <a class="ga-bold" href="' + actionUrl + '" target="_blank">' + issueTitle + ' ' +'<span class="ga-issue-number">#' + issueNum + '</span></a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
+                        ' ' + action + ' an issue ' + ' <a class="ga-bold" href="' + actionUrl + '" target="_blank">' + issueTitle + ' ' +'<span class="ga-issue-number">#' + issueNum + '</span></a>' +
+                        labelsDiv +
+                        ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -359,6 +377,13 @@ function getPullRequestEventTypeContent(activity) {
     }
   }
   let actionUrl = activity.payload.pull_request.html_url;
+  let labels =  activity.payload.pull_request.labels;
+  let labelsDiv = '';
+  labels.forEach(function(label) {
+    labelsDiv += '<span class="label" style="background-color:#' + label.color + '">' +
+                   label.name +
+                 '</span>';
+  });
   let createdAt = activity.created_at;
   let timeFromNow = moment(createdAt).fromNow();
   // icon url
@@ -388,7 +413,9 @@ function getPullRequestEventTypeContent(activity) {
                       '</div>' +
                       '<div class="action-description">' +
                         '<a href="' + userUrl + '" class="username">' + username + '</a>' +
-                        ' ' + action + ' a pull request ' + '<a class="ga-bold" href="' + actionUrl + '" target="_blank">' +  pullRequestTitle + ' ' + '<span class="ga-issue-number">#' + pullRequestNumber + '</span></a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
+                        ' ' + action + ' a pull request ' + '<a class="ga-bold" href="' + actionUrl + '" target="_blank">' +  pullRequestTitle + ' ' + '<span class="ga-issue-number">#' + pullRequestNumber + '</span></a>' +
+                        labelsDiv +
+                        ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
@@ -456,6 +483,13 @@ function getPullRequestReviewCommentEventTypeContent(activity) {
   let commentUrl = comment.html_url;
   let pullRequestNum = pullRequest.number;
   let pullResuestUrl = pullRequest.html_url;
+  let labels =  pull_request.labels;
+  let labelsDiv = '';
+  labels.forEach(function(label) {
+    labelsDiv += '<span class="label" style="background-color:#' + label.color + '">' +
+                   label.name +
+                 '</span>';
+  });
   let title = pullRequest.title;
   let action = activity.payload.action;
   let createdAt = activity.created_at;
@@ -473,7 +507,9 @@ function getPullRequestReviewCommentEventTypeContent(activity) {
                       '</div>' +
                       '<div class="action-description">' +
                         '<a href="' + userUrl + '" class="username">' + username + '</a>' +
-                        ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a class="ga-bold" href="' + pullResuestUrl + '" target="_blank">' + title + ' ' + '<span class="ga-issue-number">#' + pullRequestNum + ' '  + '</span></a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
+                        ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a class="ga-bold" href="' + pullResuestUrl + '" target="_blank">' + title + ' ' + '<span class="ga-issue-number">#' + pullRequestNum + ' '  + '</span></a>' +
+                        labelsDiv +
+                        ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
