@@ -268,7 +268,8 @@ function getIssueCommentEventTypeContent(activity) {
   let labels = issue.labels;
   let labelsDiv = '';
   labels.forEach(function(label) {
-    labelsDiv += '<span class="label" style="background-color:#' + label.color + '">' +
+    textColor = textColorBaseOnLuma(label.color);
+    labelsDiv += '<span class="label" style="background-color:#' + label.color + ';color:' + textColor + '">' +
                    label.name +
                  '</span>';
   });
@@ -318,7 +319,8 @@ function getIssuesEventTypeContent(activity) {
   let labels = issue.labels;
   let labelsDiv = '';
   labels.forEach(function(label) {
-    labelsDiv += '<span class="label" style="background-color:#' + label.color + '">' +
+    textColor = textColorBaseOnLuma(label.color);
+    labelsDiv += '<span class="label" style="background-color:#' + label.color + ';color:' + textColor + '">' +
                    label.name +
                  '</span>';
   });
@@ -380,7 +382,8 @@ function getPullRequestEventTypeContent(activity) {
   let labels =  activity.payload.pull_request.labels;
   let labelsDiv = '';
   labels.forEach(function(label) {
-    labelsDiv += '<span class="label" style="background-color:#' + label.color + '">' +
+    textColor = textColorBaseOnLuma(label.color);
+    labelsDiv += '<span class="label" style="background-color:#' + label.color + ';color:' + textColor + '">' +
                    label.name +
                  '</span>';
   });
@@ -486,7 +489,8 @@ function getPullRequestReviewCommentEventTypeContent(activity) {
   let labels =  pullRequest.labels;
   let labelsDiv = '';
   labels.forEach(function(label) {
-    labelsDiv += '<span class="label" style="background-color:#' + label.color + '">' +
+    textColor = textColorBaseOnLuma(label.color);
+    labelsDiv += '<span class="label" style="background-color:#' + label.color + ';color:' + textColor + '">' +
                    label.name +
                  '</span>';
   });
