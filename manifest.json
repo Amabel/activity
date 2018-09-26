@@ -25,7 +25,8 @@
         "js/contentScript.js",
         "lib/js/popper.min.js",
         "lib/js/bootstrap.min.js",
-        "lib/js/moment.min.js"
+        "lib/js/moment.min.js",
+        "lib/js/utils.js"
       ]
     }
   ],
