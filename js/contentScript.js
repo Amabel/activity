@@ -197,6 +197,9 @@ function resolveActivity(activity) {
     case 'WatchEvent':
       contentDiv += getWatchEventTypeContent(activity);
       break;
+    case 'ForkEvent':
+      contentDiv += getForkEventTypeContent(activity);
+      break;
     default:
       unsupportedActivityNum ++;
       console.log('unsupported type: ' + activityType);
@@ -630,6 +633,44 @@ function getWatchEventTypeContent(activity) {
                       '<div class="action-description">' +
                         '<a href="' + userUrl + '" class="username">' + username + '</a>' +
                         ' started watching <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
+                      '</div>' +
+                    '</div>' +
+                    '<div class="time-stamp">' +
+                      timeFromNow
+                    '</div>' +
+                  '</div>'
+                '</div>' +
+              '</div>';
+  return contents;
+}
+
+function getForkEventTypeContent(activity) {
+  let contents = '';
+  let username = activity.actor.login;
+  let userUrl = GITHUB_PREFIX + username;
+  let avatarUrl = activity.actor.avatar_url;
+  let orgRepoName = activity.repo.name;
+  let repoName = activity.repo.name.split('/')[1];
+  let repoUrl = 'https://github.com/' + orgRepoName;
+  let forkeeUrl = activity.payload.forkee.html_url;
+  let forkeeName = activity.payload.forkee.full_name;
+  let createdAt = activity.created_at;
+  let timeFromNow = moment(createdAt).fromNow();
+  let iconUrl = chrome.runtime.getURL('images/icons/repo-forked.svg');
+  contents += '<div class="activity-content-wrapper">' +
+                '<div class="activity-row">' +
+                  '<div class="activity-icon-wrapper">' +
+                    '<img src="' + iconUrl + '">' +
+                  '</div>' +
+                  '<div class="activity-description">' +
+                    '<div class="action">' +
+                      '<div class="ga-avatar">' +
+                        '<img src="' + avatarUrl + '">' +
+                      '</div>' +
+                      '<div class="action-description">' +
+                        '<a href="' + userUrl + '" class="username">' + username + '</a>' +
+                        ' forked <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
+                        ' into <a href="' + forkeeUrl + '" target="_blank">' + forkeeName + '</a>'
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
