@@ -44,8 +44,8 @@ function validateAccessToken(accessToken) {
     dataType: 'json',
     success: function(data) {
       addInfoToMainContainer(data);
-      getActivities(accessToken, false, addContentsToActivityContentDiv);
-      setInterval(function() { getActivities(accessToken, true, addContentsToActivityContentDiv)}, 5000);
+      getUserOrganizations();
+      setInterval(function() { getActivities(true, addContentsToActivityContentDiv)}, 5000);
     },
     error: function(error) {
       console.log(JSON.stringify(error));
@@ -85,19 +85,51 @@ function addInfoToMainContainer(data) {
   homePage = myData.html_url;
 }
 
-function getActivities(accessToken, removeDiv, callback) {
-  // Google analytics
-  // chrome.runtime.sendMessage({eventCategory: 'orgnizationPage', eventAction: 'getActivities'});
+function getUserOrganizations() {
+  let url = GITHUB_API_ENDPOINT + '/user/orgs' + '?access_token=' + accessToken;
   $.ajax({
-    url: GITHUB_API_ENDPOINT + '/users/' + username + '/events/orgs/' + orgName + '?access_token=' + accessToken,
+    url: url,
     dataType: 'json',
-    success: function(data) {
-      callback(data, removeDiv);
+    success: function(orgsJson) {
+      let orgsName = [];
+      let myOrgs = eval(orgsJson);
+      $.each(myOrgs, function(index, myOrg) {
+        orgsName.push(myOrg.login);
+      });
+      createGetActivitiesEndpoint(isUserInCurrentOrganization(orgsName));
+      getActivities(false, addContentsToActivityContentDiv);
     },
     error: function(error) {
       console.log(JSON.stringify(error));
     }
   })
+}
+
+function isUserInCurrentOrganization(orgs) {
+  return $.inArray(orgName, orgs) > -1;
+}
+
+function createGetActivitiesEndpoint(userIsInCurrentOrganization) {
+  getActivitiesEndpoint = userIsInCurrentOrganization
+  ? GITHUB_API_ENDPOINT + '/users/' + username + '/events/orgs/' + orgName + '?access_token=' + accessToken
+  : GITHUB_API_ENDPOINT + '/orgs/' + orgName + '/events';
+}
+
+function getActivities(removeDiv, callback) {
+  // Google analytics
+  // chrome.runtime.sendMessage({eventCategory: 'orgnizationPage', eventAction: 'getActivities'});
+  if (typeof getActivitiesEndpoint != 'undefined') {
+    $.ajax({
+      url: getActivitiesEndpoint,
+      dataType: 'json',
+      success: function(data) {
+        callback(data, removeDiv);
+      },
+      error: function(error) {
+        console.log(JSON.stringify(error));
+      }
+    })
+  }
 }
 
 function addContentsToActivityContentDiv(data, removeDiv) {
