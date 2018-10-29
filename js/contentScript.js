@@ -1,21 +1,29 @@
 GITHUB_API_ENDPOINT = 'https://api.github.com';
 GITHUB_PREFIX = 'https://github.com/';
 
+// find the current orgnization name from the url
 let orgName = window.location.toString().split('/')[3];
 if (orgName === 'orgs') {
   orgName = window.location.toString().split('/')[4];
 }
+
+// find the 'projects' tab (div), and attach the 'activities' tab (div)
 let regex = new RegExp(".*Projects.*");
 let nav = $('.pagehead-tabs-item').filter(function () {
   return regex.test($(this).text());
 });
-unsupportedActivityNum = 0;
+// create the 'activities' tab (div)
 let iconUrl = chrome.extension.getURL("images/icons/activities.svg");
 activitiesTab = '<a class="pagehead-tabs-item ga-tabs-item">' +
-                  '<img src="' + iconUrl + '" class="octicon ga-icon-wrapper">' +
-                  'Activities' +
-                '</a>';
+'<img src="' + iconUrl + '" class="octicon ga-icon-wrapper">' +
+'Activities' +
+'</a>';
 nav.before(activitiesTab);
+
+// For recording the number of unsupported activities,
+// then we can update the divs properly.
+// (Because we need to remove those divs at every refresh)
+unsupportedActivityNum = 0;
 
 $('.ga-tabs-item').click(function() {
   // Google analytics
