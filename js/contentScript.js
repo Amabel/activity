@@ -670,7 +670,7 @@ function getForkEventTypeContent(activity) {
                       '<div class="action-description">' +
                         '<a href="' + userUrl + '" class="username">' + username + '</a>' +
                         ' forked <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
-                        ' into <a href="' + forkeeUrl + '" target="_blank">' + forkeeName + '</a>'
+                        ' into <a href="' + forkeeUrl + '" target="_blank">' + forkeeName + '</a>' +
                       '</div>' +
                     '</div>' +
                     '<div class="time-stamp">' +
