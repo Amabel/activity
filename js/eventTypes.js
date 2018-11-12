@@ -1,4 +1,17 @@
-// event types
+// event types:
+//
+// CreateEvent
+// DeleteEvent
+// IssueCommentEvent
+// IssuesEvent
+// PullRequestEvent
+// PushEvent
+// PullRequestReviewEvent, not implemented
+// PullRequestReviewCommentEvent
+// ReleaseEvent
+// WatchEvent
+// ForkEvent
+
 function getCreateEventTypeContents(activity) {
   let contents = '';
   let username = activity.actor.login;
