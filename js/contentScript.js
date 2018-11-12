@@ -34,7 +34,7 @@ $('.ga-tabs-item').click(function() {
   })
   $(this).addClass('selected');
   $(this).children('.ga-icon-wrapper').addClass('ga-selected');
-  showContents();
+  showContentsInOrganizationPage();
 });
 
 function validateAccessToken(accessToken) {
@@ -53,7 +53,7 @@ function validateAccessToken(accessToken) {
   })
 }
 
-function showContents() {
+function showContentsInOrganizationPage() {
   $('.orghead').next().remove();
   $('.orghead').after('<div class="ga-container container"></div>');
   let key = 'github_activities_access_token';
