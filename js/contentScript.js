@@ -1,19 +1,40 @@
 GITHUB_API_ENDPOINT = 'https://api.github.com';
 GITHUB_PREFIX = 'https://github.com/';
+ORGANIZATION_PAGE = 'organization_page';
+REPOSITORY_PAGE = 'repository_page';
 
 // find the current orgnization name from the url
 let orgName = window.location.toString().split('/')[3];
 if (orgName === 'orgs') {
   orgName = window.location.toString().split('/')[4];
 }
+let repoOwner = orgName;
+
+// Find out the type of current page, ORGANIZATION PAGE or REPOSITORY PAGE
+// If the length is 3 -> ORGANIZATION PAGE, 4 -> REPOSITORY PAGE
+// examples:
+// https://github.com/desktop
+// https://github.com/desktop/desktop
+let pageType = window.location.toString().split('/').length === 5 ? REPOSITORY_PAGE : ORGANIZATION_PAGE
+
+if (pageType === REPOSITORY_PAGE) {
+  repoName = window.location.toString().split('/')[4];
+}
 
 // find the 'projects' tab (div), and attach the 'activities' tab (div)
 let regex = new RegExp(".*Projects.*");
-let nav = $('.pagehead-tabs-item').filter(function () {
-  return regex.test($(this).text());
-});
+
 // create the 'activities' tab (div)
 let iconUrl = chrome.extension.getURL("images/icons/activities.svg");
+
+if (pageType === ORGANIZATION_PAGE) {
+  nav = $('.pagehead-tabs-item').filter(function () {
+    return regex.test($(this).text());
+  });
+} else if (pageType === REPOSITORY_PAGE) {
+  nav = $('.reponav').children('.reponav-item:first');
+}
+
 activitiesTab = '<a class="pagehead-tabs-item ga-tabs-item">' +
 '<img src="' + iconUrl + '" class="octicon ga-icon-wrapper">' +
 'Activities' +
@@ -27,15 +48,30 @@ unsupportedActivityNum = 0;
 
 $('.ga-tabs-item').click(function() {
   // Google analytics
-  chrome.runtime.sendMessage({eventCategory: 'orgnizationPage', eventAction: 'showActivities'});
+  if (pageType === ORGANIZATION_PAGE) {
+    chrome.runtime.sendMessage({eventCategory: 'orgnizationPage', eventAction: 'showActivities'});
+  } else if (pageType === REPOSITORY_PAGE) {
+    chrome.runtime.sendMessage({eventCategory: 'repositoryPage', eventAction: 'showActivities'});
+  }
   $('.pagehead-tabs-item').each(function() {
     $(this).removeClass('selected');
     $(this).children('.ga-icon-wrapper').removeClass('ga-selected');
   })
   $(this).addClass('selected');
   $(this).children('.ga-icon-wrapper').addClass('ga-selected');
-  showContentsInOrganizationPage();
+  deleteGithubPageContents();
+  showContents();
 });
+
+function deleteGithubPageContents() {
+  if (pageType === ORGANIZATION_PAGE) {
+    $('.orghead').next().remove();
+    $('.orghead').after('<div class="ga-container container"></div>');
+  } else if (pageType === REPOSITORY_PAGE) {
+    $('.repository-content').remove();
+    $('.repohead').after('<div class="ga-container container"></div>');
+  }
+}
 
 function validateAccessToken(accessToken) {
   // if verified, returns the user info
@@ -53,9 +89,7 @@ function validateAccessToken(accessToken) {
   })
 }
 
-function showContentsInOrganizationPage() {
-  $('.orghead').next().remove();
-  $('.orghead').after('<div class="ga-container container"></div>');
+function showContents() {
   let key = 'github_activities_access_token';
   chrome.storage.sync.get([key], function(result) {
     accessToken = result[key];
@@ -110,9 +144,13 @@ function isUserInCurrentOrganization(orgs) {
 }
 
 function createGetActivitiesEndpoint(userIsInCurrentOrganization) {
-  getActivitiesEndpoint = userIsInCurrentOrganization
-  ? GITHUB_API_ENDPOINT + '/users/' + username + '/events/orgs/' + orgName + '?access_token=' + accessToken
-  : GITHUB_API_ENDPOINT + '/orgs/' + orgName + '/events';
+  if (pageType === REPOSITORY_PAGE) {
+    getActivitiesEndpoint = GITHUB_API_ENDPOINT + '/repos/' + repoOwner + '/' + repoName + '/events'  + '?access_token=' + accessToken;
+  } else {
+    getActivitiesEndpoint = userIsInCurrentOrganization
+    ? GITHUB_API_ENDPOINT + '/users/' + username + '/events/orgs/' + orgName + '?access_token=' + accessToken
+    : GITHUB_API_ENDPOINT + '/orgs/' + orgName + '/events'  + '?access_token=' + accessToken;
+  }
 }
 
 function getActivities(removeDiv, callback) {
