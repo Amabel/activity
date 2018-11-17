@@ -251,6 +251,9 @@ function getPullRequestEventTypeContent(activity) {
     case 'merged':
       iconUrl = chrome.runtime.getURL('images/icons/git-merge.svg');
       break;
+    case 'reopened':
+      iconUrl = chrome.runtime.getURL('images/icons/issue-reopened.svg');
+      break;
     default:
       iconUrl = null;
   }
