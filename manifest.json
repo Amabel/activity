@@ -22,6 +22,7 @@
       "css": ["styles/activities.css"],
       "js": [
         "lib/js/jquery.min.js",
+        "js/eventTypes.js",
         "js/contentScript.js",
         "lib/js/popper.min.js",
         "lib/js/bootstrap.min.js",

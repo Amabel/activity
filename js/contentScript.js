@@ -1,19 +1,40 @@
 GITHUB_API_ENDPOINT = 'https://api.github.com';
 GITHUB_PREFIX = 'https://github.com/';
+ORGANIZATION_PAGE = 'organization_page';
+REPOSITORY_PAGE = 'repository_page';
 
 // find the current orgnization name from the url
 let orgName = window.location.toString().split('/')[3];
 if (orgName === 'orgs') {
   orgName = window.location.toString().split('/')[4];
 }
+let repoOwner = orgName;
+
+// Find out the type of current page, ORGANIZATION PAGE or REPOSITORY PAGE
+// If the length is 3 -> ORGANIZATION PAGE, 4 -> REPOSITORY PAGE
+// examples:
+// https://github.com/desktop
+// https://github.com/desktop/desktop
+let pageType = window.location.toString().split('/').length === 5 ? REPOSITORY_PAGE : ORGANIZATION_PAGE
+
+if (pageType === REPOSITORY_PAGE) {
+  repoName = window.location.toString().split('/')[4];
+}
 
 // find the 'projects' tab (div), and attach the 'activities' tab (div)
 let regex = new RegExp(".*Projects.*");
-let nav = $('.pagehead-tabs-item').filter(function () {
-  return regex.test($(this).text());
-});
+
 // create the 'activities' tab (div)
 let iconUrl = chrome.extension.getURL("images/icons/activities.svg");
+
+if (pageType === ORGANIZATION_PAGE) {
+  nav = $('.pagehead-tabs-item').filter(function () {
+    return regex.test($(this).text());
+  });
+} else if (pageType === REPOSITORY_PAGE) {
+  nav = $('.reponav').children('.reponav-item:first');
+}
+
 activitiesTab = '<a class="pagehead-tabs-item ga-tabs-item">' +
 '<img src="' + iconUrl + '" class="octicon ga-icon-wrapper">' +
 'Activities' +
@@ -27,15 +48,30 @@ unsupportedActivityNum = 0;
 
 $('.ga-tabs-item').click(function() {
   // Google analytics
-  chrome.runtime.sendMessage({eventCategory: 'orgnizationPage', eventAction: 'showActivities'});
+  if (pageType === ORGANIZATION_PAGE) {
+    chrome.runtime.sendMessage({eventCategory: 'orgnizationPage', eventAction: 'showActivities'});
+  } else if (pageType === REPOSITORY_PAGE) {
+    chrome.runtime.sendMessage({eventCategory: 'repositoryPage', eventAction: 'showActivities'});
+  }
   $('.pagehead-tabs-item').each(function() {
     $(this).removeClass('selected');
     $(this).children('.ga-icon-wrapper').removeClass('ga-selected');
   })
   $(this).addClass('selected');
   $(this).children('.ga-icon-wrapper').addClass('ga-selected');
+  deleteGithubPageContents();
   showContents();
 });
+
+function deleteGithubPageContents() {
+  if (pageType === ORGANIZATION_PAGE) {
+    $('.orghead').next().remove();
+    $('.orghead').after('<div class="ga-container container"></div>');
+  } else if (pageType === REPOSITORY_PAGE) {
+    $('.repository-content').remove();
+    $('.repohead').after('<div class="ga-container container"></div>');
+  }
+}
 
 function validateAccessToken(accessToken) {
   // if verified, returns the user info
@@ -54,8 +90,6 @@ function validateAccessToken(accessToken) {
 }
 
 function showContents() {
-  $('.orghead').next().remove();
-  $('.orghead').after('<div class="ga-container container"></div>');
   let key = 'github_activities_access_token';
   chrome.storage.sync.get([key], function(result) {
     accessToken = result[key];
@@ -110,9 +144,13 @@ function isUserInCurrentOrganization(orgs) {
 }
 
 function createGetActivitiesEndpoint(userIsInCurrentOrganization) {
-  getActivitiesEndpoint = userIsInCurrentOrganization
-  ? GITHUB_API_ENDPOINT + '/users/' + username + '/events/orgs/' + orgName + '?access_token=' + accessToken
-  : GITHUB_API_ENDPOINT + '/orgs/' + orgName + '/events';
+  if (pageType === REPOSITORY_PAGE) {
+    getActivitiesEndpoint = GITHUB_API_ENDPOINT + '/repos/' + repoOwner + '/' + repoName + '/events'  + '?access_token=' + accessToken;
+  } else {
+    getActivitiesEndpoint = userIsInCurrentOrganization
+    ? GITHUB_API_ENDPOINT + '/users/' + username + '/events/orgs/' + orgName + '?access_token=' + accessToken
+    : GITHUB_API_ENDPOINT + '/orgs/' + orgName + '/events'  + '?access_token=' + accessToken;
+  }
 }
 
 function getActivities(removeDiv, callback) {
@@ -205,479 +243,4 @@ function resolveActivity(activity) {
       console.log('unsupported type: ' + activityType);
   }
   return contentDiv;
-}
-
-// event types
-function getCreateEventTypeContents(activity) {
-  let contents = '';
-  let username = activity.actor.login;
-  let userUrl = GITHUB_PREFIX + username;
-  let avatarUrl = activity.actor.avatar_url;
-  let orgRepoName = activity.repo.name;
-  let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
-  let refType = activity.payload.ref_type;
-  let ref = activity.payload.ref || '';
-  let actionUrl = repoUrl + '/tree/' + ref;
-  let createdAt = activity.created_at;
-  let timeFromNow = moment(createdAt).fromNow();
-  let iconUrl = '';
-  switch(refType) {
-    case 'branch':
-      iconUrl = chrome.runtime.getURL('images/icons/git-branch.svg');
-      break;
-    case 'tag':
-    case 'tags':
-      iconUrl = chrome.runtime.getURL('images/icons/tag.svg');
-      break;
-    case 'repository':
-      iconUrl = chrome.runtime.getURL('images/icons/repo.svg');
-      break;
-    default:
-  }
-  contents += '<div class="activity-content-wrapper">' +
-                '<div class="activity-row">' +
-                  '<div class="activity-icon-wrapper">' +
-                    '<img src="' + iconUrl + '">' +
-                  '</div>' +
-                  '<div class="activity-description">' +
-                    '<div class="action">' +
-                      '<div class="ga-avatar">' +
-                        '<img src="' + avatarUrl + '">' +
-                      '</div>' +
-                      '<div class="action-description">' +
-                        '<a href="' + userUrl + '" class="username">' + username + '</a>' +
-                        ' created a ' + refType + ' <a class="ga-bold" href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
-                      '</div>' +
-                    '</div>' +
-                    '<div class="time-stamp">' +
-                      timeFromNow
-                    '</div>' +
-                  '</div>'
-                '</div>' +
-              '</div>';
-  return contents;
-}
-
-function getDeleteEventTypeContent(activity) {
-  let contents = '';
-  let username = activity.actor.login;
-  let userUrl = GITHUB_PREFIX + username;
-  let avatarUrl = activity.actor.avatar_url;
-  let orgRepoName = activity.repo.name;
-  let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
-  let refType = activity.payload.ref_type;
-  let ref = activity.payload.ref;
-  let actionUrl = repoUrl + '/branches';
-  let createdAt = activity.created_at;
-  let timeFromNow = moment(createdAt).fromNow();
-  let iconUrl = chrome.runtime.getURL('images/icons/trashcan.svg');
-  contents += '<div class="activity-content-wrapper">' +
-                '<div class="activity-row">' +
-                  '<div class="activity-icon-wrapper">' +
-                    '<img src="' + iconUrl + '">' +
-                  '</div>' +
-                  '<div class="activity-description">' +
-                    '<div class="action">' +
-                      '<div class="ga-avatar">' +
-                        '<img src="' + avatarUrl + '">' +
-                      '</div>' +
-                      '<div class="action-description">' +
-                        '<a href="' + userUrl + '" class="username">' + username + '</a>' +
-                        ' deleted a ' + refType + ' <a class="ga-bold" href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
-                      '</div>' +
-                    '</div>' +
-                    '<div class="time-stamp">' +
-                      timeFromNow
-                    '</div>' +
-                  '</div>'
-                '</div>' +
-              '</div>';
-  return contents;
-}
-
-function getIssueCommentEventTypeContent(activity) {
-  let contents = '';
-  let username = activity.actor.login;
-  let userUrl = GITHUB_PREFIX + username;
-  let avatarUrl = activity.actor.avatar_url;
-  let orgRepoName = activity.repo.name;
-  let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
-  let comment = activity.payload.comment;
-  let issue = activity.payload.issue;
-  let issueTitle = issue.title;
-  let commentUrl = comment.html_url;
-  let issueNum = issue.number;
-  let issueUrl = issue.html_url;
-  let labels = issue.labels;
-  let labelsDiv = '';
-  labels.forEach(function(label) {
-    textColor = textColorBaseOnLuma(label.color);
-    labelsDiv += '<span class="label" style="background-color:#' + label.color + ';color:' + textColor + '">' +
-                   label.name +
-                 '</span>';
-  });
-  let title = issue.title;
-  let action = activity.payload.action;
-  let createdAt = activity.created_at;
-  let timeFromNow = moment(createdAt).fromNow();
-  let iconUrl = chrome.runtime.getURL('images/icons/comment.svg');
-  contents += '<div class="activity-content-wrapper">' +
-                '<div class="activity-row">' +
-                  '<div class="activity-icon-wrapper">' +
-                    '<img src="' + iconUrl + '">' +
-                  '</div>' +
-                  '<div class="activity-description">' +
-                    '<div class="action">' +
-                      '<div class="ga-avatar">' +
-                        '<img src="' + avatarUrl + '">' +
-                      '</div>' +
-                      '<div class="action-description">' +
-                        '<a href="' + userUrl + '" class="username">' + username + '</a>' +
-                        ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a class="ga-bold" href="' + issueUrl + '" target="_blank">' + issueTitle + ' ' + '<span class="ga-issue-number">#' + issueNum + '</span></a>' +
-                        labelsDiv +
-                        ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
-                      '</div>' +
-                    '</div>' +
-                    '<div class="time-stamp">' +
-                      timeFromNow
-                    '</div>' +
-                  '</div>'
-                '</div>' +
-              '</div>';
-  return contents;
-}
-
-function getIssuesEventTypeContent(activity) {
-  let contents = '';
-  let username = activity.actor.login;
-  let userUrl = GITHUB_PREFIX + username;
-  let avatarUrl = activity.actor.avatar_url;
-  let orgRepoName = activity.repo.name;
-  let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
-  let issue = activity.payload.issue;
-  let issueNum = issue.number;
-  let issueTitle = issue.title;
-  let actionUrl = issue.html_url;
-  let labels = issue.labels;
-  let labelsDiv = '';
-  labels.forEach(function(label) {
-    textColor = textColorBaseOnLuma(label.color);
-    labelsDiv += '<span class="label" style="background-color:#' + label.color + ';color:' + textColor + '">' +
-                   label.name +
-                 '</span>';
-  });
-  let action = activity.payload.action;
-  let createdAt = activity.created_at;
-  let timeFromNow = moment(createdAt).fromNow();
-  let iconUrl = '';
-  if (action === 'closed') {
-    iconUrl = chrome.runtime.getURL('images/icons/issue-closed.svg');
-  } else if (action === 'reopened') {
-    iconUrl = chrome.runtime.getURL('images/icons/issue-reopened.svg');
-  } else {
-    iconUrl = chrome.runtime.getURL('images/icons/issue-opened.svg');
-  }
-  contents += '<div class="activity-content-wrapper">' +
-                '<div class="activity-row">' +
-                  '<div class="activity-icon-wrapper">' +
-                    '<img src="' + iconUrl + '">' +
-                  '</div>' +
-                  '<div class="activity-description">' +
-                    '<div class="action">' +
-                      '<div class="ga-avatar">' +
-                        '<img src="' + avatarUrl + '">' +
-                      '</div>' +
-                      '<div class="action-description">' +
-                        '<a href="' + userUrl + '" class="username">' + username + '</a>' +
-                        ' ' + action + ' an issue ' + ' <a class="ga-bold" href="' + actionUrl + '" target="_blank">' + issueTitle + ' ' +'<span class="ga-issue-number">#' + issueNum + '</span></a>' +
-                        labelsDiv +
-                        ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
-                      '</div>' +
-                    '</div>' +
-                    '<div class="time-stamp">' +
-                      timeFromNow
-                    '</div>' +
-                  '</div>'
-                '</div>' +
-              '</div>';
-  return contents;
-}
-
-function getPullRequestEventTypeContent(activity) {
-  let contents = '';
-  let username = activity.actor.login;
-  let userUrl = GITHUB_PREFIX + username;
-  let avatarUrl = activity.actor.avatar_url;
-  let orgRepoName = activity.repo.name;
-  let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
-  let pullRequestNumber = activity.payload.pull_request.number;
-  let pullRequestTitle = activity.payload.pull_request.title;
-  // action
-  let action = activity.payload.action;
-  if (action === 'closed') {
-    if (activity.payload.pull_request.merged) {
-      action = 'merged';
-    }
-  }
-  let actionUrl = activity.payload.pull_request.html_url;
-  let labels =  activity.payload.pull_request.labels;
-  let labelsDiv = '';
-  labels.forEach(function(label) {
-    textColor = textColorBaseOnLuma(label.color);
-    labelsDiv += '<span class="label" style="background-color:#' + label.color + ';color:' + textColor + '">' +
-                   label.name +
-                 '</span>';
-  });
-  let createdAt = activity.created_at;
-  let timeFromNow = moment(createdAt).fromNow();
-  // icon url
-  let iconUrl = null;
-  switch (action) {
-    case 'opened':
-      iconUrl = chrome.runtime.getURL('images/icons/git-pull-request-open.svg');
-      break;
-    case 'closed':
-      iconUrl = chrome.runtime.getURL('images/icons/git-pull-request-closed.svg');
-      break;
-    case 'merged':
-      iconUrl = chrome.runtime.getURL('images/icons/git-merge.svg');
-      break;
-    default:
-      iconUrl = null;
-  }
-  contents += '<div class="activity-content-wrapper">' +
-                '<div class="activity-row">' +
-                  '<div class="activity-icon-wrapper">' +
-                    '<img src="' + iconUrl + '">' +
-                  '</div>' +
-                  '<div class="activity-description">' +
-                    '<div class="action">' +
-                      '<div class="ga-avatar">' +
-                        '<img src="' + avatarUrl + '">' +
-                      '</div>' +
-                      '<div class="action-description">' +
-                        '<a href="' + userUrl + '" class="username">' + username + '</a>' +
-                        ' ' + action + ' a pull request ' + '<a class="ga-bold" href="' + actionUrl + '" target="_blank">' +  pullRequestTitle + ' ' + '<span class="ga-issue-number">#' + pullRequestNumber + '</span></a>' +
-                        labelsDiv +
-                        ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
-                      '</div>' +
-                    '</div>' +
-                    '<div class="time-stamp">' +
-                      timeFromNow
-                    '</div>' +
-                  '</div>'
-                '</div>' +
-              '</div>';
-  return contents;
-}
-
-function getPushEventTypeContent(activity) {
-  let contents = '';
-  let username = activity.actor.login;
-  let userUrl = GITHUB_PREFIX + username;
-  let avatarUrl = activity.actor.avatar_url;
-  let orgRepoName = activity.repo.name;
-  let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
-  let ref = activity.payload.ref.substring(11);
-  let actionUrl = activity.payload.commits[0] ? repoUrl + '/commits/' + activity.payload.commits[0].sha : '#';
-  let numberOfCommit = activity.payload.commits.length;
-  let commitWord = numberOfCommit > 1 ? 'commits' : 'commit';
-  let createdAt = activity.created_at;
-  let timeFromNow = moment(createdAt).fromNow();
-  let iconUrl = chrome.runtime.getURL('images/icons/repo-push.svg');
-  contents += '<div class="activity-content-wrapper">' +
-                '<div class="activity-row">' +
-                  '<div class="activity-icon-wrapper">' +
-                    '<img src="' + iconUrl + '">' +
-                  '</div>' +
-                  '<div class="activity-description">' +
-                    '<div class="action">' +
-                      '<div class="ga-avatar">' +
-                        '<img src="' + avatarUrl + '">' +
-                      '</div>' +
-                      '<div class="action-description">' +
-                        '<a href="' + userUrl + '" class="username">' + username + '</a>' +
-                        ' pushed ' + numberOfCommit + ' ' + commitWord + ' into ' + ' <a class="ga-bold" href="' + actionUrl + '" target="_blank">' + ref + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
-                      '</div>' +
-                    '</div>' +
-                    '<div class="time-stamp">' +
-                      timeFromNow
-                    '</div>' +
-                  '</div>'
-                '</div>' +
-              '</div>';
-  return contents;
-}
-
-function getPullRequestReviewEventTypeContent(activity) {
-
-}
-
-function getPullRequestReviewCommentEventTypeContent(activity) {
-  let contents = '';
-  let username = activity.actor.login;
-  let userUrl = GITHUB_PREFIX + username;
-  let avatarUrl = activity.actor.avatar_url;
-  let orgRepoName = activity.repo.name;
-  let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
-  let comment = activity.payload.comment;
-  let pullRequest = activity.payload.pull_request;
-  let commentUrl = comment.html_url;
-  let pullRequestNum = pullRequest.number;
-  let pullResuestUrl = pullRequest.html_url;
-  let labels =  pullRequest.labels;
-  let labelsDiv = '';
-  labels.forEach(function(label) {
-    textColor = textColorBaseOnLuma(label.color);
-    labelsDiv += '<span class="label" style="background-color:#' + label.color + ';color:' + textColor + '">' +
-                   label.name +
-                 '</span>';
-  });
-  let title = pullRequest.title;
-  let action = activity.payload.action;
-  let createdAt = activity.created_at;
-  let timeFromNow = moment(createdAt).fromNow();
-  let iconUrl = chrome.runtime.getURL('images/icons/comment.svg');
-  contents += '<div class="activity-content-wrapper">' +
-                '<div class="activity-row">' +
-                  '<div class="activity-icon-wrapper">' +
-                    '<img src="' + iconUrl + '">' +
-                  '</div>' +
-                  '<div class="activity-description">' +
-                    '<div class="action">' +
-                      '<div class="ga-avatar">' +
-                        '<img src="' + avatarUrl + '">' +
-                      '</div>' +
-                      '<div class="action-description">' +
-                        '<a href="' + userUrl + '" class="username">' + username + '</a>' +
-                        ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a class="ga-bold" href="' + pullResuestUrl + '" target="_blank">' + title + ' ' + '<span class="ga-issue-number">#' + pullRequestNum + ' '  + '</span></a>' +
-                        labelsDiv +
-                        ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
-                      '</div>' +
-                    '</div>' +
-                    '<div class="time-stamp">' +
-                      timeFromNow
-                    '</div>' +
-                  '</div>'
-                '</div>' +
-              '</div>';
-  return contents;
-}
-
-function getReleaseEventTypeContent(activity) {
-  let contents = '';
-  let username = activity.actor.login;
-  let userUrl = GITHUB_PREFIX + username;
-  let avatarUrl = activity.actor.avatar_url;
-  let orgRepoName = activity.repo.name;
-  let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
-  let releaseName = activity.payload.release.name;
-  let actionUrl = activity.payload.release.html_url;
-  let preRelease = activity.payload.release.prerelease ? 'pre-' : '';
-  let createdAt = activity.created_at;
-  let timeFromNow = moment(createdAt).fromNow();
-  let iconUrl = chrome.runtime.getURL('images/icons/package.svg');
-  contents += '<div class="activity-content-wrapper">' +
-                '<div class="activity-row">' +
-                  '<div class="activity-icon-wrapper">' +
-                    '<img src="' + iconUrl + '">' +
-                  '</div>' +
-                  '<div class="activity-description">' +
-                    '<div class="action">' +
-                      '<div class="ga-avatar">' +
-                        '<img src="' + avatarUrl + '">' +
-                      '</div>' +
-                      '<div class="action-description">' +
-                        '<a href="' + userUrl + '" class="username">' + username + '</a>' +
-                        ' published a ' + preRelease + 'release ' + '<a class="ga-bold" href="' + actionUrl + '" target="_blank">' + releaseName + '</a>' + ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
-                      '</div>' +
-                    '</div>' +
-                    '<div class="time-stamp">' +
-                      timeFromNow
-                    '</div>' +
-                  '</div>'
-                '</div>' +
-              '</div>';
-  return contents;
-}
-
-function getWatchEventTypeContent(activity) {
-  let contents = '';
-  let username = activity.actor.login;
-  let userUrl = GITHUB_PREFIX + username;
-  let avatarUrl = activity.actor.avatar_url;
-  let orgRepoName = activity.repo.name;
-  let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
-  let createdAt = activity.created_at;
-  let timeFromNow = moment(createdAt).fromNow();
-  let iconUrl = chrome.runtime.getURL('images/icons/eye.svg');
-  contents += '<div class="activity-content-wrapper">' +
-                '<div class="activity-row">' +
-                  '<div class="activity-icon-wrapper">' +
-                    '<img src="' + iconUrl + '">' +
-                  '</div>' +
-                  '<div class="activity-description">' +
-                    '<div class="action">' +
-                      '<div class="ga-avatar">' +
-                        '<img src="' + avatarUrl + '">' +
-                      '</div>' +
-                      '<div class="action-description">' +
-                        '<a href="' + userUrl + '" class="username">' + username + '</a>' +
-                        ' started watching <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
-                      '</div>' +
-                    '</div>' +
-                    '<div class="time-stamp">' +
-                      timeFromNow
-                    '</div>' +
-                  '</div>'
-                '</div>' +
-              '</div>';
-  return contents;
-}
-
-function getForkEventTypeContent(activity) {
-  let contents = '';
-  let username = activity.actor.login;
-  let userUrl = GITHUB_PREFIX + username;
-  let avatarUrl = activity.actor.avatar_url;
-  let orgRepoName = activity.repo.name;
-  let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
-  let forkeeUrl = activity.payload.forkee.html_url;
-  let forkeeName = activity.payload.forkee.full_name;
-  let createdAt = activity.created_at;
-  let timeFromNow = moment(createdAt).fromNow();
-  let iconUrl = chrome.runtime.getURL('images/icons/repo-forked.svg');
-  contents += '<div class="activity-content-wrapper">' +
-                '<div class="activity-row">' +
-                  '<div class="activity-icon-wrapper">' +
-                    '<img src="' + iconUrl + '">' +
-                  '</div>' +
-                  '<div class="activity-description">' +
-                    '<div class="action">' +
-                      '<div class="ga-avatar">' +
-                        '<img src="' + avatarUrl + '">' +
-                      '</div>' +
-                      '<div class="action-description">' +
-                        '<a href="' + userUrl + '" class="username">' + username + '</a>' +
-                        ' forked <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
-                        ' into <a href="' + forkeeUrl + '" target="_blank">' + forkeeName + '</a>' +
-                      '</div>' +
-                    '</div>' +
-                    '<div class="time-stamp">' +
-                      timeFromNow
-                    '</div>' +
-                  '</div>'
-                '</div>' +
-              '</div>';
-  return contents;
 }
