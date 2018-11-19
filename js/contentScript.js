@@ -3,6 +3,17 @@ GITHUB_PREFIX = 'https://github.com/';
 ORGANIZATION_PAGE = 'organization_page';
 REPOSITORY_PAGE = 'repository_page';
 
+// The background page is asking us to find an address on the page.
+if (window == top) {
+  chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
+  if (req.is_content_script)
+      if (!$('#activity-tab').length) {
+        launchActivity();
+      }
+      sendResponse({is_content_script: true});
+  });
+};
+
 launchActivity();
 
 function launchActivity() {

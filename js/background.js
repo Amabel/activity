@@ -33,6 +33,20 @@ function sendMessageToContentScript(message, callback)
     });
 }
 
+function updatePageAction(tabId)
+{
+  chrome.tabs.sendMessage(tabId, {is_content_script: true}, function(response) {
+    if (response.is_content_script)
+      chrome.pageAction.show(tabId);
+  });
+};
+
+chrome.tabs.onUpdated.addListener(function(tabId, change, tab) {
+  if (change.status == "complete") {
+    updatePageAction(tabId);
+  }
+});
+
 function GITHUB_API_ENDPOINT() {
   return 'https://api.github.com';
 }
