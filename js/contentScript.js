@@ -3,65 +3,69 @@ GITHUB_PREFIX = 'https://github.com/';
 ORGANIZATION_PAGE = 'organization_page';
 REPOSITORY_PAGE = 'repository_page';
 
-// find the current orgnization name from the url
-let orgName = window.location.toString().split('/')[3];
-if (orgName === 'orgs') {
-  orgName = window.location.toString().split('/')[4];
-}
-let repoOwner = orgName;
+launchActivity();
 
-// Find out the type of current page, ORGANIZATION PAGE or REPOSITORY PAGE
-// If the length is 3 -> ORGANIZATION PAGE, 4 -> REPOSITORY PAGE
-// examples:
-// https://github.com/desktop
-// https://github.com/desktop/desktop
-let pageType = window.location.toString().split('/').length === 5 ? REPOSITORY_PAGE : ORGANIZATION_PAGE
-
-if (pageType === REPOSITORY_PAGE) {
-  repoName = window.location.toString().split('/')[4];
-}
-
-// find the 'projects' tab (div), and attach the 'activities' tab (div)
-let regex = new RegExp(".*Projects.*");
-
-// create the 'activities' tab (div)
-let iconUrl = chrome.extension.getURL("images/icons/activities.svg");
-
-if (pageType === ORGANIZATION_PAGE) {
-  nav = $('.pagehead-tabs-item').filter(function () {
-    return regex.test($(this).text());
-  });
-} else if (pageType === REPOSITORY_PAGE) {
-  nav = $('.reponav').children('.reponav-item:first');
-}
-
-activitiesTab = '<a class="pagehead-tabs-item ga-tabs-item">' +
-'<img src="' + iconUrl + '" class="octicon ga-icon-wrapper">' +
-'Activities' +
-'</a>';
-nav.before(activitiesTab);
-
-// For recording the number of unsupported activities,
-// then we can update the divs properly.
-// (Because we need to remove those divs at every refresh)
-unsupportedActivityNum = 0;
-
-$('.ga-tabs-item').click(function() {
-  // Google analytics
-  if (pageType === ORGANIZATION_PAGE) {
-    chrome.runtime.sendMessage({eventCategory: 'orgnizationPage', eventAction: 'showActivities'});
-  } else if (pageType === REPOSITORY_PAGE) {
-    chrome.runtime.sendMessage({eventCategory: 'repositoryPage', eventAction: 'showActivities'});
+function launchActivity() {
+  // find the current orgnization name from the url
+  orgName = window.location.toString().split('/')[3];
+  if (orgName === 'orgs') {
+    orgName = window.location.toString().split('/')[4];
   }
-  $('.pagehead-tabs-item').each(function() {
-    $(this).removeClass('selected');
-    $(this).children('.ga-icon-wrapper').removeClass('ga-selected');
-  })
-  $(this).addClass('selected');
-  $(this).children('.ga-icon-wrapper').addClass('ga-selected');
-  deleteGithubPageContents();
-  showContents();
-});
+  repoOwner = orgName;
+
+  // Find out the type of current page, ORGANIZATION PAGE or REPOSITORY PAGE
+  // If the length is 3 -> ORGANIZATION PAGE, 4 -> REPOSITORY PAGE
+  // examples:
+  // https://github.com/desktop
+  // https://github.com/desktop/desktop
+  pageType = window.location.toString().split('/').length === 5 ? REPOSITORY_PAGE : ORGANIZATION_PAGE
+
+  if (pageType === REPOSITORY_PAGE) {
+    repoName = window.location.toString().split('/')[4];
+  }
+
+  // find the 'projects' tab (div), and attach the 'activities' tab (div)
+  let regex = new RegExp(".*Projects.*");
+
+  // create the 'activities' tab (div)
+  let iconUrl = chrome.extension.getURL("images/icons/activities.svg");
+
+  if (pageType === ORGANIZATION_PAGE) {
+    nav = $('.pagehead-tabs-item').filter(function () {
+      return regex.test($(this).text());
+    });
+  } else if (pageType === REPOSITORY_PAGE) {
+    nav = $('.reponav').children('.reponav-item:first');
+  }
+
+  activitiesTab = '<a id="activity-tab" class="pagehead-tabs-item ga-tabs-item">' +
+  '<img src="' + iconUrl + '" class="octicon ga-icon-wrapper">' +
+  'Activities' +
+  '</a>';
+  nav.before(activitiesTab);
+
+  // For recording the number of unsupported activities,
+  // then we can update the divs properly.
+  // (Because we need to remove those divs at every refresh)
+  unsupportedActivityNum = 0;
+
+  $('.ga-tabs-item').click(function() {
+    // Google analytics
+    if (pageType === ORGANIZATION_PAGE) {
+      chrome.runtime.sendMessage({eventCategory: 'orgnizationPage', eventAction: 'showActivities'});
+    } else if (pageType === REPOSITORY_PAGE) {
+      chrome.runtime.sendMessage({eventCategory: 'repositoryPage', eventAction: 'showActivities'});
+    }
+    $('.pagehead-tabs-item').each(function() {
+      $(this).removeClass('selected');
+      $(this).children('.ga-icon-wrapper').removeClass('ga-selected');
+    })
+    $(this).addClass('selected');
+    $(this).children('.ga-icon-wrapper').addClass('ga-selected');
+    deleteGithubPageContents();
+    showContents();
+  });
+}
 
 function deleteGithubPageContents() {
   if (pageType === ORGANIZATION_PAGE) {
