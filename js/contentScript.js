@@ -6,11 +6,13 @@ REPOSITORY_PAGE = 'repository_page';
 // The background page is asking us to find an address on the page.
 if (window == top) {
   chrome.extension.onMessage.addListener(function(req, sender, sendResponse) {
-  if (req.is_content_script)
+    if (req.is_content_script) {
+      clearExistingTimers();
       if (!$('#activity-tab').length) {
         launchActivity();
       }
-      sendResponse({is_content_script: true});
+    }
+    sendResponse({is_content_script: true});
   });
 };
 
@@ -67,6 +69,9 @@ function launchActivity() {
     } else if (pageType === REPOSITORY_PAGE) {
       chrome.runtime.sendMessage({eventCategory: 'repositoryPage', eventAction: 'showActivities'});
     }
+
+    clearExistingTimers();
+
     $('.pagehead-tabs-item').each(function() {
       $(this).removeClass('selected');
       $(this).children('.ga-icon-wrapper').removeClass('ga-selected');
@@ -96,7 +101,7 @@ function validateAccessToken(accessToken) {
     success: function(data) {
       addInfoToMainContainer(data);
       getUserOrganizations();
-      setInterval(function() { getActivities(true, addContentsToActivityContentDiv)}, 5000);
+      activityTimer = setInterval(function() { getActivities(true, addContentsToActivityContentDiv)}, 5000);
     },
     error: function(error) {
       console.log(JSON.stringify(error));
@@ -258,4 +263,10 @@ function resolveActivity(activity) {
       console.log('unsupported type: ' + activityType);
   }
   return contentDiv;
+}
+
+function clearExistingTimers() {
+  if (typeof activityTimer != 'undefined') {
+    clearInterval(activityTimer);
+  }
 }
