@@ -18,7 +18,7 @@ function launchActivity() {
   // examples:
   // https://github.com/desktop
   // https://github.com/desktop/desktop
-  pageType = window.location.toString().split('/').length === 5 ? REPOSITORY_PAGE : ORGANIZATION_PAGE
+  pageType = window.location.toString().split('/').length >= 5 ? REPOSITORY_PAGE : ORGANIZATION_PAGE
 
   if (pageType === REPOSITORY_PAGE) {
     repoName = window.location.toString().split('/')[4];
