@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Activities for GitHub",
-  "version": "0.4.0",
+  "name": "Activity for GitHub",
+  "version": "0.4.1",
   "description": "Show your personal and organization events on GitHub.",
 
   "permissions": [
@@ -19,7 +19,7 @@
   "content_scripts": [
     {
       "matches": ["*://github.com/*"],
-      "css": ["styles/activities.css"],
+      "css": ["styles/activity.css"],
       "js": [
         "lib/js/jquery.min.js",
         "js/eventTypes.js",
@@ -41,7 +41,7 @@
 
   "browser_action":
 	{
-    "default_title": "Activities for GitHub",
+    "default_title": "Activity for GitHub",
 		"default_popup": "popup.html"
 	},
 
