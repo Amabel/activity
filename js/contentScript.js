@@ -47,18 +47,18 @@ function launchActivity() {
     nav = $('.pagehead-tabs-item').filter(function () {
       return regex.test($(this).text());
     });
-    activitiesTab = '<a id="activity-tab" class="pagehead-tabs-item ga-tabs-item">' +
+    activityTab = '<a id="activity-tab" class="pagehead-tabs-item ga-tabs-item">' +
                     '<img src="' + iconUrl + '" class="octicon ga-icon-wrapper">' +
-                    'Activities' +
+                    'Activity' +
                     '</a>';
   } else if (pageType === REPOSITORY_PAGE) {
     nav = $('.reponav').children('.reponav-item:first');
-    activitiesTab = '<a id="activity-tab" class="reponav-item ga-tabs-item">' +
+    activityTab = '<a id="activity-tab" class="reponav-item ga-tabs-item">' +
     '<img src="' + iconUrl + '" class="octicon ga-icon-wrapper">' +
-    'Activities' +
+    'Activity' +
     '</a>';
   }
-  nav.before(activitiesTab);
+  nav.before(activityTab);
 
   // For recording the number of unsupported activities,
   // then we can update the divs properly.
