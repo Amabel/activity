@@ -10,7 +10,7 @@ function issueCommentPopoverDiv(issueCommentEvent) {
   let content = '';
   let div = '';
   let id = 'popover_' + issueCommentEvent.id;
-  let repoName = issueCommentEvent.repo.name;
+  let repoName = ellipsisBy(issueCommentEvent.repo.name.split('/')[1], 18);
   let issue = issueCommentEvent.payload.issue;
   let issueTitle = ellipsisBy(issue.title, 50);
   let issueCreatedAt = moment(issue.created_at).format('ll');
