@@ -24,12 +24,7 @@ function issueCommentPopoverDiv(issueCommentEvent) {
   let commentUrl = comment.html_url;
   let issueBody = ellipsisBy(trimHtmlTags(marked(issue.body)), 100);
   let commentBody = ellipsisBy(trimHtmlTags(marked(comment.body)), 100);
-  console.log(issueBody);
-  console.log(commentBody);
   let user = issueCommentEvent.payload.comment.user;
-
-  console.log(issueCommentEvent);
-
   content += '<a href="' + commentUrl + '" ' +
                ' class="comment-text-wrapper with-popover"' +
                ' target="_blank"' +
@@ -80,17 +75,11 @@ function pullRequestReviewCommentPopoverDiv(pullRequestReviewCommentEvent) {
     stateColor = isClosed ? '#cb2431' : '#2cbe4e';
     iconUrl = chrome.runtime.getURL('images/icons/git-pull-request-white.svg');
   }
-
   let comment = pullRequestReviewCommentEvent.payload.comment;
   let commentUrl = comment.html_url;
   let issueBody = ellipsisBy(trimHtmlTags(marked(issue.body)), 100);
   let commentBody = ellipsisBy(trimHtmlTags(marked(comment.body)), 100);
-  console.log(issueBody);
-  console.log(commentBody);
   let user = pullRequestReviewCommentEvent.payload.comment.user;
-
-  console.log(pullRequestReviewCommentEvent);
-
   content += '<a href="' + commentUrl + '" ' +
                ' class="comment-text-wrapper with-popover"' +
                ' target="_blank"' +
