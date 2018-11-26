@@ -280,12 +280,10 @@ function addHoverListener() {
   $('.with-popover').each(function() {
     $(this).hover(
       function () {
-        console.log('hover');
         activityTimer.clearInterval();
         activityTimer.pause();
       },
       function () {
-        console.log('unhover');
         activityTimer.resume();
       }
     )
