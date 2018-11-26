@@ -201,6 +201,7 @@ function addContentsToActivityContentDiv(data, removeDiv) {
     $.each(activities.reverse(), function(index, activity) {
       // console.log(activity);
       $('.ga-container').prepend(resolveActivity(activity));
+      reloadTippy();
     });
     let divNum = data.length - unsupportedActivityNum;
     if (removeDiv) {

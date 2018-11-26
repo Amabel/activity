@@ -1,0 +1,83 @@
+.popover-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 8px;
+}
+
+.popover-container span, .popover-container div {
+  word-break: break-word;
+}
+
+.popover-container .issue-title {
+  text-align: left;
+  font-weight: bold;
+}
+
+.popover-container .info-wrapper {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.popover-container .info-wrapper span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.popover-container .info-wrapper span img {
+  margin-right: 4px;
+  width: 16px;
+}
+
+.popover-container .info-wrapper .issue-state {
+  padding: 4px 8px;
+  border-radius: 3px;
+  line-height: 20px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.popover-container .info-wrapper .info-description {
+  margin-left: 8px;
+  font-size: 12px;
+}
+
+.popover-container .issue-body {
+  margin-top: 12px;
+  text-align: left;
+  /* word-break: break-word; */
+}
+
+.popover-container .divider {
+  margin-top: 12px;
+  width: 100%;
+  height: 1px;
+  background-color: #e0e4e7;
+}
+
+.popover-container .user-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-top: 12px;
+}
+
+.popover-container .user-wrapper .avatar-wrapper {
+  width: 16px;
+  height: 16px;
+}
+
+.popover-container .user-wrapper .avatar-wrapper img {
+  width: 100%;
+}
+
+.popover-container .user-wrapper .username {
+  margin: 0 8px;
+  font-weight: bold;
+}
+
+.popover-container .issue-comment {
+  margin-top: 4px;
+  text-align: left;
+}
