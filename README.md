@@ -25,7 +25,9 @@ A chrome extension that can show personal and organization activities in real ti
 
 ### 1. Generate access token
 
-Go to [github](https://github.com/settings/tokens/new) and generate a new access token with the **repo** scope.
+Go to [GitHub](https://github.com/settings/tokens/new) and generate a new access token with the **repo** scope.
+
+<img src="https://res.cloudinary.com/luoweibinb/image/upload/v1543276019/activity/Screen_Shot_2018-11-27_at_8.46.22_AM.png" width="300px">
 
 ### 2. Submit the access token
 
@@ -35,4 +37,4 @@ Input your access token into the popup of Activity and click Submit.
 
 ### 3. Start using it
 
-Go to organization or repository pages and click **Activity** tab.
+Go to organization or repository pages and click the **Activity** tab.
