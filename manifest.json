@@ -20,6 +20,10 @@
     {
       "matches": ["*://github.com/*"],
       "css": [
+        "lib/styles/tippy-light-border.css",
+        "lib/styles/tippy.css",
+        "styles/global.css",
+        "styles/popover.css",
         "styles/activity.css"
       ],
       "js": [
@@ -28,6 +32,7 @@
         "lib/js/bootstrap.min.js",
         "lib/js/moment.min.js",
         "lib/js/utils.js",
+        "js/popover.js",
         "js/event-types.js",
         "js/content-script.js"
       ]
