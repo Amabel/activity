@@ -104,7 +104,7 @@ function validateAccessToken(accessToken) {
     success: function(data) {
       addInfoToMainContainer(data);
       getUserOrganizations();
-      activityTimer = setInterval(function() { getActivities(true, addContentsToActivityContentDiv)}, 5000);
+      activityTimer = new IntervalTimer(function() { getActivities(true, addContentsToActivityContentDiv)}, 5000);
     },
     error: function(error) {
       console.log(JSON.stringify(error));
@@ -201,6 +201,8 @@ function addContentsToActivityContentDiv(data, removeDiv) {
     $.each(activities.reverse(), function(index, activity) {
       // console.log(activity);
       $('.ga-container').prepend(resolveActivity(activity));
+      addHoverListener();
+      reloadTippy();
     });
     let divNum = data.length - unsupportedActivityNum;
     if (removeDiv) {
@@ -270,6 +272,20 @@ function resolveActivity(activity) {
 
 function clearExistingTimers() {
   if (typeof activityTimer != 'undefined') {
-    clearInterval(activityTimer);
+    activityTimer.clearInterval();
   }
+}
+
+function addHoverListener() {
+  $('.with-popover').each(function() {
+    $(this).hover(
+      function () {
+        activityTimer.clearInterval();
+        activityTimer.pause();
+      },
+      function () {
+        activityTimer.resume();
+      }
+    )
+  });
 }
