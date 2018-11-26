@@ -19,15 +19,17 @@
   "content_scripts": [
     {
       "matches": ["*://github.com/*"],
-      "css": ["styles/activity.css"],
+      "css": [
+        "styles/activity.css"
+      ],
       "js": [
         "lib/js/jquery.min.js",
-        "js/event-types.js",
-        "js/content-script.js",
         "lib/js/popper.min.js",
         "lib/js/bootstrap.min.js",
         "lib/js/moment.min.js",
-        "lib/js/utils.js"
+        "lib/js/utils.js",
+        "js/event-types.js",
+        "js/content-script.js"
       ]
     }
   ],
