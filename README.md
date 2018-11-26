@@ -9,7 +9,7 @@ A chrome extension that can show personal and organization activities in real ti
 
 ### Activities in organization pages
 
-<img src="https://res.cloudinary.com/luoweibinb/image/upload/v1543234373/activity/Screen_Shot_2018-11-26_at_9.07.11_PM.png" width="640px">
+<img src="https://res.cloudinary.com/luoweibinb/image/upload/v1543272750/activity/demo-org-page-2.png" width="640px">
 
 
 ### Activities in repository pages
