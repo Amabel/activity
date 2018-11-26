@@ -140,7 +140,9 @@ function getIssueCommentEventTypeContent(activity) {
                       '</div>' +
                       '<div class="action-description">' +
                         '<a href="' + userUrl + '" class="username">' + username + '</a>' +
-                        ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a class="ga-bold" href="' + issueUrl + '" target="_blank">' + issueTitle + ' ' + '<span class="ga-issue-number">#' + issueNum + '</span></a>' +
+                        ' ' + action + ' a ' +
+                        issueCommentPopoverDiv(activity) +
+                        ' on ' + '<a class="ga-bold" href="' + issueUrl + '" target="_blank">' + issueTitle + ' ' + '<span class="ga-issue-number">#' + issueNum + '</span></a>' +
                         labelsDiv +
                         ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
                       '</div>' +
@@ -364,7 +366,9 @@ function getPullRequestReviewCommentEventTypeContent(activity) {
                       '</div>' +
                       '<div class="action-description">' +
                         '<a href="' + userUrl + '" class="username">' + username + '</a>' +
-                        ' ' + action + ' a ' + '<a href="' + commentUrl + '" class="comment-text-wrapper" target="_blank">comment</a> on ' + ' <a class="ga-bold" href="' + pullResuestUrl + '" target="_blank">' + title + ' ' + '<span class="ga-issue-number">#' + pullRequestNum + ' '  + '</span></a>' +
+                        ' ' + action + ' a ' +
+                        pullRequestReviewCommentPopoverDiv(activity) +
+                        ' on <a class="ga-bold" href="' + pullResuestUrl + '" target="_blank">' + title + ' ' + '<span class="ga-issue-number">#' + pullRequestNum + ' '  + '</span></a>' +
                         labelsDiv +
                         ' in <a href="' + repoUrl + '" target="_blank">' + repoName + '</a>' +
                       '</div>' +
