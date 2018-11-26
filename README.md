@@ -9,17 +9,17 @@ A chrome extension that can show personal and organization activities in real ti
 
 ### Activities in organization pages
 
-<img src="https://res.cloudinary.com/luoweibinb/image/upload/c_mfit,e_shadow:40,h_800,w_800/v1543234373/activity/Screen_Shot_2018-11-26_at_9.07.11_PM.png" width="640px">
+<img src="https://res.cloudinary.com/luoweibinb/image/upload/v1543234373/activity/Screen_Shot_2018-11-26_at_9.07.11_PM.png" width="640px">
 
 
 ### Activities in repository pages
 
-<img src="https://res.cloudinary.com/luoweibinb/image/upload/c_mfit,e_shadow:40,w_800/v1543234344/activity/Screen_Shot_2018-11-26_at_9.11.17_PM.png" width="640px">
+<img src="https://res.cloudinary.com/luoweibinb/image/upload/v1543234344/activity/Screen_Shot_2018-11-26_at_9.11.17_PM.png" width="640px">
 
 
 ## Download
 
-<a href="https://chrome.google.com/webstore/detail/activity-for-github/ddccohlodlgoekgcneljaolpifgkfhki"><img src="https://res.cloudinary.com/luoweibinb/image/upload/bo_1px_solid_rgb:d9d9d9,r_5/v1543232977/activity/chrome_web_store.png" width="200px"></a>
+<a href="https://chrome.google.com/webstore/detail/activity-for-github/ddccohlodlgoekgcneljaolpifgkfhki"><img src="https://res.cloudinary.com/luoweibinb/image/upload/bo_1px_solid_rgb:d9d9d9,r_10/v1543232977/activity/chrome_web_store.png" width="200px"></a>
 
 ## Usage
 
@@ -35,4 +35,4 @@ Input your access token into the popup of Activity and click Submit.
 
 ### 3. Start using it
 
-Go to organization pages or repository pages and click **Activity** tab.
+Go to organization or repository pages and click **Activity** tab.
