@@ -133,7 +133,7 @@ function requireSubmitTokenDiv() {
   return `
     <div class="ga-require-submit-container">
       <div class="qa-requiresubmit-wrapper ga-not-found">
-        Can't find your token :(<br>
+        Cannot find your token :(<br>
         Please submit your GitHub access token with the repo scope.
       </div>
     </div>
