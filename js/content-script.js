@@ -47,16 +47,20 @@ function launchActivity() {
     nav = $('.pagehead-tabs-item').filter(function () {
       return regex.test($(this).text());
     });
-    activityTab = '<a id="activity-tab" class="pagehead-tabs-item ga-tabs-item">' +
-                    '<img src="' + iconUrl + '" class="octicon ga-icon-wrapper">' +
-                    'Activity' +
-                    '</a>';
+    activityTab = `
+      <a id="activity-tab" class="pagehead-tabs-item ga-tabs-item">
+        <img src="${iconUrl}" class="octicon ga-icon-wrapper">
+        Activity
+      </a>
+    `;
   } else if (pageType === REPOSITORY_PAGE) {
     nav = $('.reponav').children('.reponav-item:first');
-    activityTab = '<a id="activity-tab" class="reponav-item ga-tabs-item">' +
-    '<img src="' + iconUrl + '" class="octicon ga-icon-wrapper">' +
-    'Activity' +
-    '</a>';
+    activityTab = `
+      <a id="activity-tab" class="reponav-item ga-tabs-item">
+        <img src="${iconUrl}" class="octicon ga-icon-wrapper">
+        Activity
+      </a>
+    `;
   }
   nav.before(activityTab);
 
@@ -99,7 +103,7 @@ function deleteGithubPageContents() {
 function validateAccessToken(accessToken) {
   // if verified, returns the user info
   $.ajax({
-    url: GITHUB_API_ENDPOINT + '/user?access_token=' + accessToken,
+    url: `${GITHUB_API_ENDPOINT}/user?access_token=${accessToken}`,
     dataType: 'json',
     success: function(data) {
       addInfoToMainContainer(data);
@@ -126,12 +130,14 @@ function showContents() {
 }
 
 function requireSubmitTokenDiv() {
-  return  '<div class="ga-require-submit-container">' +
-            '<div class="qa-requiresubmit-wrapper ga-not-found">' +
-              'Can\'t find your token :(<br>' +
-              'Please submit your GitHub access token with the repo scope.' +
-            '</div>' +
-          '</div>';
+  return `
+    <div class="ga-require-submit-container">
+      <div class="qa-requiresubmit-wrapper ga-not-found">
+        Can't find your token :(<br>
+        Please submit your GitHub access token with the repo scope.
+      </div>
+    </div>
+  `;
 }
 
 function addInfoToMainContainer(data) {
@@ -143,7 +149,7 @@ function addInfoToMainContainer(data) {
 }
 
 function getUserOrganizations() {
-  let url = GITHUB_API_ENDPOINT + '/user/orgs' + '?access_token=' + accessToken;
+  let url = `${GITHUB_API_ENDPOINT}/user/orgs?access_token=${accessToken}`;
   $.ajax({
     url: url,
     dataType: 'json',
@@ -168,11 +174,11 @@ function isUserInCurrentOrganization(orgs) {
 
 function createGetActivitiesEndpoint(userIsInCurrentOrganization) {
   if (pageType === REPOSITORY_PAGE) {
-    getActivitiesEndpoint = GITHUB_API_ENDPOINT + '/repos/' + repoOwner + '/' + repoName + '/events'  + '?access_token=' + accessToken;
+    getActivitiesEndpoint = `${GITHUB_API_ENDPOINT}/repos/${repoOwner}/${repoName}/events?access_token=${accessToken}`;
   } else {
     getActivitiesEndpoint = userIsInCurrentOrganization
-    ? GITHUB_API_ENDPOINT + '/users/' + username + '/events/orgs/' + orgName + '?access_token=' + accessToken
-    : GITHUB_API_ENDPOINT + '/orgs/' + orgName + '/events'  + '?access_token=' + accessToken;
+    ? `${GITHUB_API_ENDPOINT}/users/${username}/events/orgs/${orgName}?access_token=${accessToken}`
+    : `${GITHUB_API_ENDPOINT}/orgs/${orgName}/events?access_token=${accessToken}`;
   }
 }
 
@@ -206,7 +212,7 @@ function addContentsToActivityContentDiv(data, removeDiv) {
     });
     let divNum = data.length - unsupportedActivityNum;
     if (removeDiv) {
-      $('.activity-content-wrapper:nth-last-child(-n+' + divNum + ')').remove();
+      $(`.activity-content-wrapper:nth-last-child(-n+${divNum})`).remove();
       $('.ga-no-content-wrapper:last-child').remove();
     }
   } else {
@@ -219,11 +225,14 @@ function addContentsToActivityContentDiv(data, removeDiv) {
 
 function noContentFoundDiv(activities) {
   if (activities.length === 0) {
-    return  '<div class="ga-no-content-wrapper">' +
-              '<div class="ga-no-content-description ga-not-found">' +
-                 'Oops! Nothing found here :(<br>' +
-                 'Please make sure you are a team member of this organization.' +
-            '</div>';
+    return `
+      <div class="ga-no-content-wrapper">
+        <div class="ga-no-content-description ga-not-found">
+          Oops! Nothing found here :(<br>
+          Please make sure you are a team member of this organization.
+        </div>
+      </div>
+    `;
   }
 }
 
