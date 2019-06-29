@@ -41,7 +41,7 @@ function launchActivity() {
   let regex = new RegExp(".*Projects.*");
 
   // create the 'activities' tab (div)
-  let iconUrl = chrome.extension.getURL("images/icons/activities.svg");
+  let iconUrl = chrome.extension.getURL("images/icons/activity.svg");
 
   if (pageType === ORGANIZATION_PAGE) {
     nav = $('.pagehead-tabs-item').filter(function () {
