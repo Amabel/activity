@@ -25,10 +25,14 @@ function issueCommentPopoverDiv(issueCommentEvent) {
   let issueBody = ellipsisBy(trimHtmlTags(marked(issue.body)), 100);
   let commentBody = ellipsisBy(trimHtmlTags(marked(comment.body)), 100);
   let user = issueCommentEvent.payload.comment.user;
-  content += '<a href="' + commentUrl + '" ' +
-               ' class="comment-text-wrapper with-popover"' +
-               ' target="_blank"' +
-               ' data-template="' + id + '">comment</a>';
+  content += `
+    <a href="${commentUrl}"
+      class="comment-text-wrapper with-popover"
+      target="_blank"
+      data-template="${id}">
+      comment
+    </a>
+  `;
 
   div += '<div id="' + id + '" class="popover-container">' +
             '<div class="issue-title">' + issueTitle + '</div>' +
@@ -80,10 +84,14 @@ function pullRequestReviewCommentPopoverDiv(pullRequestReviewCommentEvent) {
   let issueBody = ellipsisBy(trimHtmlTags(marked(issue.body)), 100);
   let commentBody = ellipsisBy(trimHtmlTags(marked(comment.body)), 100);
   let user = pullRequestReviewCommentEvent.payload.comment.user;
-  content += '<a href="' + commentUrl + '" ' +
-               ' class="comment-text-wrapper with-popover"' +
-               ' target="_blank"' +
-               ' data-template="' + id + '">comment</a>';
+  content += `
+    <a href="${commentUrl}"
+      class="comment-text-wrapper with-popover"
+      target="_blank"
+      data-template="${id}">
+      comment
+    </a>
+  `;
 
   div += '<div id="' + id + '" class="popover-container">' +
             '<div class="issue-title">' + issueTitle + '</div>' +

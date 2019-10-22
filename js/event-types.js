@@ -19,10 +19,10 @@ function getCreateEventTypeContents(activity) {
   let avatarUrl = activity.actor.avatar_url;
   let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
+  let repoUrl = `https://github.com/${orgRepoName}`;
   let refType = activity.payload.ref_type;
   let ref = activity.payload.ref || '';
-  let actionUrl = repoUrl + '/tree/' + ref;
+  let actionUrl = `${repoUrl}/tree/${ref}`;
   let createdAt = activity.created_at;
   let timeFromNow = moment(createdAt).fromNow();
   let iconUrl = '';
@@ -70,10 +70,10 @@ function getDeleteEventTypeContent(activity) {
   let avatarUrl = activity.actor.avatar_url;
   let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
+  let repoUrl = `https://github.com/${orgRepoName}`;
   let refType = activity.payload.ref_type;
   let ref = activity.payload.ref;
-  let actionUrl = repoUrl + '/branches';
+  let actionUrl = `${repoUrl}/branches`;
   let createdAt = activity.created_at;
   let timeFromNow = moment(createdAt).fromNow();
   let iconUrl = chrome.runtime.getURL('images/icons/trashcan.svg');
@@ -108,7 +108,7 @@ function getIssueCommentEventTypeContent(activity) {
   let avatarUrl = activity.actor.avatar_url;
   let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
+  let repoUrl = `https://github.com/${orgRepoName}`;
   let comment = activity.payload.comment;
   let issue = activity.payload.issue;
   let issueTitle = issue.title;
@@ -119,9 +119,7 @@ function getIssueCommentEventTypeContent(activity) {
   let labelsDiv = '';
   labels.forEach(function(label) {
     textColor = textColorBaseOnLuma(label.color);
-    labelsDiv += '<span class="label" style="background-color:#' + label.color + ';color:' + textColor + '">' +
-                   label.name +
-                 '</span>';
+    labelsDiv += `<span class="label" style="background-color:#${label.color};color:${textColor}">${label.name}</span>`;
   });
   let title = issue.title;
   let action = activity.payload.action;
@@ -163,7 +161,7 @@ function getIssuesEventTypeContent(activity) {
   let avatarUrl = activity.actor.avatar_url;
   let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
+  let repoUrl = `https://github.com/${orgRepoName}`;
   let issue = activity.payload.issue;
   let issueNum = issue.number;
   let issueTitle = issue.title;
@@ -172,9 +170,7 @@ function getIssuesEventTypeContent(activity) {
   let labelsDiv = '';
   labels.forEach(function(label) {
     textColor = textColorBaseOnLuma(label.color);
-    labelsDiv += '<span class="label" style="background-color:#' + label.color + ';color:' + textColor + '">' +
-                   label.name +
-                 '</span>';
+    labelsDiv += `<span class="label" style="background-color:#${label.color};color:${textColor}">${label.name}</span>`;
   });
   let action = activity.payload.action;
   let createdAt = activity.created_at;
@@ -220,7 +216,7 @@ function getPullRequestEventTypeContent(activity) {
   let avatarUrl = activity.actor.avatar_url;
   let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
+  let repoUrl = `https://github.com/${orgRepoName}`;
   let pullRequestNumber = activity.payload.pull_request.number;
   let pullRequestTitle = activity.payload.pull_request.title;
   // action
@@ -235,9 +231,7 @@ function getPullRequestEventTypeContent(activity) {
   let labelsDiv = '';
   labels.forEach(function(label) {
     textColor = textColorBaseOnLuma(label.color);
-    labelsDiv += '<span class="label" style="background-color:#' + label.color + ';color:' + textColor + '">' +
-                   label.name +
-                 '</span>';
+    labelsDiv += `<span class="label" style="background-color:#${label.color};color:${textColor}">${label.name}</span>`;
   });
   let createdAt = activity.created_at;
   let timeFromNow = moment(createdAt).fromNow();
@@ -292,9 +286,9 @@ function getPushEventTypeContent(activity) {
   let avatarUrl = activity.actor.avatar_url;
   let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
+  let repoUrl = `https://github.com/${orgRepoName}`;
   let ref = activity.payload.ref.substring(11);
-  let actionUrl = activity.payload.commits[0] ? repoUrl + '/commits/' + activity.payload.commits[0].sha : '#';
+  let actionUrl = activity.payload.commits[0] ? `${repoUrl}/commits/${activity.payload.commits[0].sha}` : '#';
   let numberOfCommit = activity.payload.commits.length;
   let commitWord = numberOfCommit > 1 ? 'commits' : 'commit';
   let createdAt = activity.created_at;
@@ -335,7 +329,7 @@ function getPullRequestReviewCommentEventTypeContent(activity) {
   let avatarUrl = activity.actor.avatar_url;
   let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
+  let repoUrl = `https://github.com/${orgRepoName}`;
   let comment = activity.payload.comment;
   let pullRequest = activity.payload.pull_request;
   let commentUrl = comment.html_url;
@@ -345,9 +339,7 @@ function getPullRequestReviewCommentEventTypeContent(activity) {
   let labelsDiv = '';
   labels.forEach(function(label) {
     textColor = textColorBaseOnLuma(label.color);
-    labelsDiv += '<span class="label" style="background-color:#' + label.color + ';color:' + textColor + '">' +
-                   label.name +
-                 '</span>';
+    labelsDiv += `<span class="label" style="background-color:#${label.color};color:${textColor}">${label.name}</span>`;
   });
   let title = pullRequest.title;
   let action = activity.payload.action;
@@ -389,7 +381,7 @@ function getReleaseEventTypeContent(activity) {
   let avatarUrl = activity.actor.avatar_url;
   let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
+  let repoUrl = `https://github.com/${orgRepoName}`;
   let releaseName = activity.payload.release.name;
   let actionUrl = activity.payload.release.html_url;
   let preRelease = activity.payload.release.prerelease ? 'pre-' : '';
@@ -427,7 +419,7 @@ function getWatchEventTypeContent(activity) {
   let avatarUrl = activity.actor.avatar_url;
   let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
+  let repoUrl = `https://github.com/${orgRepoName}`;
   let createdAt = activity.created_at;
   let timeFromNow = moment(createdAt).fromNow();
   let iconUrl = chrome.runtime.getURL('images/icons/eye.svg');
@@ -462,7 +454,7 @@ function getForkEventTypeContent(activity) {
   let avatarUrl = activity.actor.avatar_url;
   let orgRepoName = activity.repo.name;
   let repoName = activity.repo.name.split('/')[1];
-  let repoUrl = 'https://github.com/' + orgRepoName;
+  let repoUrl = `https://github.com/${orgRepoName}`;
   let forkeeUrl = activity.payload.forkee.html_url;
   let forkeeName = activity.payload.forkee.full_name;
   let createdAt = activity.created_at;
