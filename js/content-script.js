@@ -83,6 +83,12 @@ function launchActivity() {
       $(this).removeClass('selected');
       $(this).children('.ga-icon-wrapper').removeClass('ga-selected');
     })
+
+    $('.reponav-item').each(function() {
+      $(this).removeClass('selected');
+      $(this).children('.ga-icon-wrapper').removeClass('ga-selected');
+    })
+
     $(this).addClass('selected');
     $(this).children('.ga-icon-wrapper').addClass('ga-selected');
     deleteGithubPageContents();
