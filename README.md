@@ -1,18 +1,18 @@
 # Activity
 
-![CircleCI (all branches)](https://img.shields.io/circleci/project/github/gitpulse/activity.svg)
+![CircleCI (all branches)](https://img.shields.io/circleci/project/github/Amabel/activity.svg)
 ![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ddccohlodlgoekgcneljaolpifgkfhki.svg)
 
 A chrome extension that can show personal and organization activities in real time.
 
 ## Features
 
-### Activities in organization pages
+### Activities on organization pages
 
 <img src="https://res.cloudinary.com/luoweibinb/image/upload/v1543273598/activity/Screen_Shot_2018-11-27_at_8.05.55_AM.png" width="640px">
 
 
-### Activities in repository pages
+### Activities on repository pages
 
 <img src="https://res.cloudinary.com/luoweibinb/image/upload/v1543234344/activity/Screen_Shot_2018-11-26_at_9.11.17_PM.png" width="640px">
 
