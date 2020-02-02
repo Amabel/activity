@@ -109,7 +109,7 @@ function addInfoToMainContainer(data) {
   // console.log(avatarUrl);
   // $('.main-container .user-wrapper .avatar-wrapper').append(avatarDiv);
   $('.avatar-wrapper .avatar').attr("src", avatarUrl);
-  $('#username').text('Hi, ' + username);
+  $('#username').append(`<a href="${homePage}" target="_blank" class="text-black">${username}</a>`);
   $('.logout-button').click(logout);
 }
 

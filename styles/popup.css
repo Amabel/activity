@@ -13,6 +13,10 @@ a:hover {
   text-decoration: none;
 }
 
+.text-black {
+  color: #343a40;
+}
+
 .container {
   /* padding: 0; */
 }
