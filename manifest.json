@@ -7,8 +7,7 @@
   "permissions": [
     "activeTab",
     "declarativeContent",
-    "storage",
-    "webNavigation"
+    "storage"
   ],
 
   "background": {
