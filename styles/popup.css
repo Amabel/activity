@@ -84,6 +84,8 @@ a:hover {
 
 .main-container .user-wrapper .avatar-wrapper .avatar {
   width: 100%;
+  border: 1px solid #e1e4e8;
+  border-radius: 2px;
 }
 
 .main-container .user-wrapper .description {
