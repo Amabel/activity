@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Activity for GitHub",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Show your personal and organization events on GitHub.",
 
   "permissions": [
